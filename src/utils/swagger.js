@@ -12,7 +12,7 @@ exports.options = {
       url: "https://swagger.io",
       description: "Find more info here",
     },
-    host: "localhost:5055",
+    host: "https://rec.netbot.ec/v1",
     schemes: ["http"],
     consumes: ["application/json"],
     produces: ["application/json"],
