@@ -3,20 +3,24 @@ import { conexion } from "../database/conexion";
 moment.locale("es");
 
 export const ConsultarSaldoActual = async (idtienda) => {
-    return new Promise((resolve, reject) => {
-        let sql = "SELECT saldo FROM saldos WHERE idtienda = ?";
-        conexion.query(sql, [idtienda], async (err, result) => {
-            if (err) {
-                reject(err)
-                console.log(err)
-            }
-            if (result.length > 0) {
-                resolve(result[0].saldo)
-            } else {
-                resolve(null)
-            }
+    try {
+        return new Promise((resolve, reject) => {
+            let sql = "SELECT saldo FROM saldos WHERE idtienda = ?";
+            conexion.query(sql, [idtienda], async (err, result) => {
+                if (err) {
+                    reject(err)
+                    console.log(err)
+                }
+                if (result.length > 0) {
+                    resolve(result[0].saldo)
+                } else {
+                    resolve(null)
+                }
+            })
         })
-    })
+    } catch (error) {
+        console.log(error);        
+    }
 }
 
 export const tikecSuspencion = async (cedula, idcliente, pasarela) => {

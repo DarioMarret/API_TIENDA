@@ -78,7 +78,11 @@ export const Facturas = async (req, reply)=>{
 
 export const Pagar = async (req, reply) => {
     const { cedula, idfactura, total, pasarela, comision, idtienda, idcliente } = req.body
+    console.log(req.body)
+    console.log("\n")
     const saldoactual = await ConsultarSaldoActual(idtienda)
+    console.log(saldoactual)
+    console.log("\n")
     if (saldoactual != null) {
         if (parseFloat(saldoactual) > parseFloat(total)) {
             await tikecSuspencion(cedula, idcliente, pasarela)
@@ -95,6 +99,7 @@ export const Pagar = async (req, reply) => {
             }
             const { data } = await axios.post(`${process.env.mikrowisp}PaidInvoice`, optiones)
             console.log(data);
+            console.log("\n")
             if (data.estado == "error") {
                 await reply.send({
                     success: false,
