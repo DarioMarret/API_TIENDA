@@ -10,7 +10,6 @@ module.exports = {
     env: {
       NODE_ENV: "production",
       PORT: "3000",
-      Local: "production",
       HOST: "0.0.0.0",
       BASIC_USERNAME: "admin",
       BASIC_PASSWORD: "admin",
