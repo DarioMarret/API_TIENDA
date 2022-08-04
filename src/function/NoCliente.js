@@ -34,7 +34,7 @@ export const NoCliente = async (cedula, reply) => {
     } catch (error) {
         reply.send({
             success: true,
-            msg: `Estimado ${data.message.name} no encontramos registro en nuestra base de datos`,
+            msg: `No encontramos registro en nuestra base de datos`,
         })       
     }
 }
