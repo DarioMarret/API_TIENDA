@@ -17,6 +17,7 @@ module.exports = {
       token_tienda: "",
       mikrowisp: "http://45.224.96.50/api/v1/",
       endpoitcedula: "https://turnos.manta.gob.ec/consultacedula/",
+      endpoitpre_registro: "http://45.224.96.50/api/v1/ListInstall"
     },
     env_development: {
       NODE_ENV: "development"
