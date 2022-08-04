@@ -10,6 +10,7 @@ export const ShearClient = async (req, reply) => {
         console.log(data)
         console.log("\n")
         if (data.estado == "error") {
+            
             await NoCliente(cedula, reply) // crear funcion de no cliente 
 
         } else {
