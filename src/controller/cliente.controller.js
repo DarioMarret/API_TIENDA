@@ -83,6 +83,7 @@ export const Pagar = async (req, reply) => {
     const saldoactual = await ConsultarSaldoActual(idtienda)
     console.log(saldoactual)
     console.log("\n")
+    return null
     if (saldoactual != null) {
         if (parseFloat(saldoactual) > parseFloat(total)) {
             await tikecSuspencion(cedula, idcliente, pasarela)
