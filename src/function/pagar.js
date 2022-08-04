@@ -20,7 +20,7 @@ export const tikecSuspencion = async (cedula, idcliente, pasarela) => {
     const { data } = await axios.post(`${process.env.mikrowisp}GetClientsDetails`, { cedula, "token": `${process.env.token_mikrowisp}` }) // consultamo cliente
     let dC = data.datos[0]
     if (dC.estado == "SUSPENDIDO") {
-        console.log("esntro a sunspencion", dC.estado)
+        console.log("estado a sunspencion", dC.estado)
         let fecha_suspendido = dC.fecha_suspendido
         let dataActual = new Date()
         console.log("dataActual", dataActual);

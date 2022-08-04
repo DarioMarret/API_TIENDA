@@ -20,7 +20,7 @@ export const ShearClient = async (req, reply) => {
 
             let datosClient = `${dC.nombre} ${dC.estado}`// Correo:${dC.correo} \n contacto:${dC.movil} Direcion:\n ${dC.direccion_principal} \n Cantidad de facturas No pagadas ${dC.facturacion.facturas_nopagadas} Total pendiente:${dC.facturacion.total_facturas}`;
 
-            const response = await axios.post(`${process.env.mikrowisp}GetInvoices`, { "idcliente": id, "estado": 1, "token": process.env.token_mikrowisp })
+            const response = await axios.post(`${process.env.mikrowisp}GetInvoices`, { "idcliente": id, "estado": 1, "token": `${process.env.token_mikrowisp}` })
             if (response.data.estado == "error") {
                 reply.send({
                     success: true,
@@ -95,7 +95,7 @@ export const Pagar = async (req, reply) => {
             await tikecSuspencion(cedula, idcliente, pasarela)
             let idtransaccion = NumeroAleatorio()
             let optiones = {
-                "token": process.env.token_tienda,
+                "token": "SlVGV20ySUFTRWJIT3k5OUdhaGVqUT09",
                 "idfactura": idfactura,
                 "pasarela": "RECAUDACION-TIENDAS",
                 "cantidad": total,
