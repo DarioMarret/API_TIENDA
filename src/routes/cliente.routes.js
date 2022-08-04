@@ -1,4 +1,4 @@
-import { Facturas, ShearClient } from "../controller/cliente.controller";
+import { Facturas, Pagar, ShearClient } from "../controller/cliente.controller";
 import { ValidacionBasic } from "../function/ValidacionBasic";
 
 const routes = [
@@ -56,7 +56,7 @@ const routes = [
             }
         },
         onRequest: ValidacionBasic,
-        handler: Facturas
+        handler: Pagar
     },
 ]
 
