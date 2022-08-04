@@ -62,13 +62,13 @@ export const Facturas = async (req, reply)=>{
         let description = ""
         for (let index = 0; index < idfacturaArray.length; index++) {
             let idfactura = idfacturaArray[index];
-            const { data } = await axios.post(`${mikrowisp}GetInvoice`,{idfactura,"token":process.env.token_mikrowisp})
+            const { data } = await axios.post(`${process.env.mikrowisp}GetInvoice`,{idfactura,"token":process.env.token_mikrowisp})
             description += `${index+1}) ${data.items[0].descrp} \n`
             total += parseFloat(data.factura.total)
         }
         await reply.send({description, total})
     }else{
-        const { data } = await axios.post(`${mikrowisp}GetInvoice`,{idfactura,"token":process.env.token_mikrowisp})
+        const { data } = await axios.post(`${process.env.mikrowisp}GetInvoice`,{idfactura,"token":process.env.token_mikrowisp})
         let description = data.items[0].descrp
         let total = data.factura.total
         await reply.send({description, total})
