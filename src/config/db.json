@@ -1,0 +1,8 @@
+{
+  "host"                 : "tourlaconquista.com",
+  "user"                 : "tour2022",
+  "password"             : "tour123456+-",
+  "database"             : "tiendas_",
+  "waitForConnections"   : true,
+  "connectionLimit"      : 10
+}
