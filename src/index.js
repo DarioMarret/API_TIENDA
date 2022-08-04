@@ -63,11 +63,7 @@ fastify.register(async fastify => {
 
 const start = async () => {
     try {
-        if (process.env.Local) {
-            await fastify.listen({ port: process.env.PORT })
-        } else {
-            await fastify.listen({ port: process.env.PORT, host: process.env.HOST })
-        }
+        await fastify.listen({ port: process.env.PORT, host: process.env.HOST || '' })
         await fastify.swagger();
         console.log(`server listening on ${process.env.PORT}`);
 
