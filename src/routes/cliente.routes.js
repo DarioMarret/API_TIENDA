@@ -9,11 +9,9 @@ const routes = [
             summary: 'shearch client store',
             body: {
                 type: 'object',
-                required: ['cedula', 'tienda', 'idtienda'],
+                required: ['cedula'],
                 properties: {
                     cedula: { type: 'string' },
-                    tienda: { type: 'string' },
-                    idtienda: { type: 'number' },
                 }
             }
         },
