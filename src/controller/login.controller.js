@@ -15,12 +15,12 @@ export const LoginAdmin = async (req, reply) => {
         if (x) {
             delete response[0][0].password
             var token = jwt.sign(response[0][0], 'speed', { expiresIn: '1h'});
-            reply.code(200).send({
+            reply.send({
                 success: true,
                 data:token
             });
         }else{
-            reply.code(204).send({
+            reply.send({
                 success: false,
                 message: "Error al iniciar sesion"
             });
@@ -31,11 +31,7 @@ export const LoginAdmin = async (req, reply) => {
 
 export const LoginTienda = async (req, reply) => {
     const { username, password } = req.body;
-    console.log(req.body)
-    console.log("\n");
     const response = await conexion.query(`SELECT * FROM tienderos_usuarios WHERE usuario = ?`, [username]);
-    console.log(response[0])
-    console.log("\n")
     if (response[0].length == 0) {
         reply.code(500).send({
             success: false,
