@@ -41,13 +41,22 @@ export const LoginTienda = async (req, reply) => {
         const x = await comparePassword(password, response[0][0].password)
         if (x) {
             delete response[0][0].password
-            reply.code(200).send(
-                response[0]
-            );
+            if (response[0][0].token_sistema.length > 0) {
+                var token = jwt.sign(response[0][0], 'speed', { expiresIn: '1h'});
+                reply.code(200).send({
+                    success: false,
+                    data: token
+                });
+            }else{
+                reply.send({
+                    success: false,
+                    message: "No tiene token asignado"
+                });
+            }
         }else{
             reply.code(204).send({
                 success: false,
-                message: "Error al iniciar sesion"
+                message: "Calve o usuario incorrecto"
             });
         }
     }
