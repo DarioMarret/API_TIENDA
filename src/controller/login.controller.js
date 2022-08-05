@@ -46,7 +46,7 @@ export const LoginTienda = async (req, reply) => {
             if (response[0][0].token_sistema.length > 0) {
                 var token = jwt.sign(response[0][0], 'speed', { expiresIn: '1h'});
                 reply.send({
-                    success: false,
+                    success: true,
                     data: token
                 });
             }else{
