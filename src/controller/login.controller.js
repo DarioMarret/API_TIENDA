@@ -31,7 +31,11 @@ export const LoginAdmin = async (req, reply) => {
 
 export const LoginTienda = async (req, reply) => {
     const { username, password } = req.body;
+    console.log(req.body)
+    console.log("\n");
     const response = await conexion.query(`SELECT * FROM tienderos_usuarios WHERE usuario = ?`, [username]);
+    console.log(response)
+    console.log("\n")
     if (response[0].length == 0) {
         reply.code(500).send({
             success: false,
