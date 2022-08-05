@@ -34,7 +34,7 @@ export const LoginTienda = async (req, reply) => {
     console.log(req.body)
     console.log("\n");
     const response = await conexion.query(`SELECT * FROM tienderos_usuarios WHERE usuario = ?`, [username]);
-    console.log(response)
+    console.log(response[0])
     console.log("\n")
     if (response[0].length == 0) {
         reply.code(500).send({
@@ -43,6 +43,8 @@ export const LoginTienda = async (req, reply) => {
         });
     } else {
         const x = await comparePassword(password, response[0][0].password)
+        console.log(x)
+        console.log("\n")
         if (x) {
             delete response[0][0].password
             if (response[0][0].token_sistema.length > 0) {
