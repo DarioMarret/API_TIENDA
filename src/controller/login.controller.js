@@ -45,7 +45,7 @@ export const LoginTienda = async (req, reply) => {
             delete response[0][0].password
             if (response[0][0].token_sistema.length > 0) {
                 var token = jwt.sign(response[0][0], 'speed', { expiresIn: '1h'});
-                reply.code(200).send({
+                reply.send({
                     success: false,
                     data: token
                 });
@@ -56,7 +56,7 @@ export const LoginTienda = async (req, reply) => {
                 });
             }
         }else{
-            reply.code(204).send({
+            reply.send({
                 success: false,
                 message: "Calve o usuario incorrecto"
             });
