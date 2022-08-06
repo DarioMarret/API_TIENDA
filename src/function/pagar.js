@@ -5,7 +5,7 @@ moment.locale("es");
 
 export const ConsultarSaldoActual = async (tienda_id) => {
     try {
-        const result = await conexion.query(`SELECT tiendas_saldos FROM saldos WHERE tienda_id = ?`, [tienda_id])
+        const result = await conexion.query(`SELECT saldos FROM tiendas_saldos WHERE tienda_id = ?`, [tienda_id])
         if (result[0].length > 0) {
             return result[0][0].saldo
         } else {
