@@ -1,4 +1,4 @@
-import { DeleteTiendas, ListTiendas, ListTiendasCedula, SaveTiendas, UpdateTiendas, UpdateTiendasPassword } from "../controller/tienderos.controller";
+import { DeleteTiendas, ListarTransaccionesTienda, ListTiendas, ListTiendasCedula, SaveTiendas, UpdateTiendas, UpdateTiendasPassword } from "../controller/tienderos.controller";
 import { ValidacionBasic } from "../function/ValidacionBasic";
 
 const routes = [
@@ -129,7 +129,24 @@ const routes = [
         onRequest: ValidacionBasic,
         handler: DeleteTiendas
 
-    }
+    },
+    {
+        path: '/api/transacciones/:id',
+        method: 'GET',
+        schema: {
+            summary: 'list transacciones tiendas',
+            params: {
+                type: 'object',
+                required: ['id'],
+                properties: {
+                    id: { type: 'string', description: 'id' },
+                }
+            }
+
+        },
+        onRequest: ValidacionBasic,
+        handler: ListarTransaccionesTienda
+    },
 ]
 
 export default routes;
