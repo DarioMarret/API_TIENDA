@@ -78,7 +78,7 @@ export const sacarLinkFactura = async (idfactura) => {
 
 export const actualizarsaldoalpagar = async (tienda_id, saldo) => {
     try {
-        const result = await conexion.query(`UPDATE tiendas_saldos SET saldos = ?, fecha_registro = ? WHERE tienda_id = ?`, [saldo, moment.format("YYYY-MM-DD HH:mm:ss", tienda_id)])
+        const result = await conexion.query(`UPDATE tiendas_saldos SET saldos = ?, fecha_registro = ? WHERE tienda_id = ?`, [saldo, moment.format("YYYY-MM-DD HH:mm:ss"), tienda_id])
         if (result.length > 0) {
             return result[0]
         } else {
