@@ -257,16 +257,9 @@ export const ListarSaldosTienda = async (req, reply) => {
 
 export const TotalesCard = async (req, reply) => {
     try {
-        const tienda = await conexion.query(`SELECT 
-        tiendas_saldos.saldos as saldo,
-        SUM(tiendas_transaciones.cantidad) as transacciones,
-        COUNT(tiendas_transaciones.cantidad) as transacciones_count,
-        SUM(tiendas_transaciones.recaudacion) as recaudacion
-        FROM tiendas_saldos
-        INNER JOIN tiendas_transaciones
-        ON tiendas_saldos.accounts_id = tiendas_transaciones.accounts_id
-        WHERE tiendas_saldos.tienda_id = ?`, [req.params.id]);
-        if (!tienda) {
+        const saldo = await conexion.query(`SELECT saldos as saldo FROM tiendas_saldos WHERE tienda_id = ?`, [req.params.id]);
+        const transacciones = await conexion.query(`SELECT SUM(cantidad) as transacciones, COUNT(cantidad) as transacciones_count, SUM(recaudacion) as recaudacion FROM tiendas_transaciones WHERE tienda_id = ?`, [req.params.id]);
+        if (!saldo || !transacciones) {
             reply.code(500).send({
                 success: false,
                 message: "Error al tienda"
@@ -274,7 +267,12 @@ export const TotalesCard = async (req, reply) => {
         } else {
             reply.code(200).send({
                 success: true,
-                data: tienda[0][0]
+                data: {
+                    saldo: saldo[0][0].saldo != null ? saldo[0][0].saldo : 0,
+                    transacciones: transacciones[0][0].transacciones != null ? transacciones[0][0].transacciones : 0,
+                    transacciones_count: transacciones[0][0].transacciones_count != null ? transacciones[0][0].transacciones_count : 0,
+                    recaudacion: transacciones[0][0].recaudacion != null ? transacciones[0][0].recaudacion : 0
+                }
             });
         }
     } catch (error) {
