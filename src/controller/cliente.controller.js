@@ -1,16 +1,16 @@
-import { actualizarsaldoalpagar, ConsultarSaldoActual, guardarTransaccion, NumeroAleatorio, sacarLinkFactura, tikecSuspencion } from '../function/pagar'
+import { actualizarsaldoalpagar, ConsultarSaldoActual, guardarTransaccion, NumeroAleatorio, tikecSuspencion } from '../function/pagar'
 import { NoCliente } from '../function/NoCliente'
 import axios from 'axios'
 import 'dotenv/config'
 
 export const ShearClient = async (req, reply) => {
     try {
-        const { cedula, idtienda, tienda } = req.body
+        const { cedula } = req.body
         const { data } = await axios.post(`${process.env.mikrowisp}GetClientsDetails`, { cedula, "token": process.env.token_mikrowisp }) // consultamo cliente
         console.log(data)
         console.log("\n")
         if (data.estado == "error") {
-            
+
             await NoCliente(cedula, reply) // crear funcion de no cliente 
 
         } else {
@@ -50,7 +50,7 @@ export const ShearClient = async (req, reply) => {
                 reply.send([...info, {
                     idfactura, idcliente, detalle: `Total a pagar ${total}`, total, "success": true,
                     info: { direccion: dC.direccion_principal, cedula: cedula, fecha_corte: fecha_corte_ultima, total: parseFloat(total), idfactura }
-                }, { datosClient }])
+                }, { datosClient, telefono: dC.telefono, movil: dC.movil }])
             }
         }
 
@@ -84,46 +84,37 @@ export const Facturas = async (req, reply) => {
 
 
 export const Pagar = async (req, reply) => {
-    const { cedula, idfactura, total, pasarela, comision, idtienda, idcliente } = req.body
-    console.log(req.body)
-    console.log("\n")
-    const saldoactual = await ConsultarSaldoActual(idtienda)
+    const { cedula, idfactura, total, pasarela, id_tienda, idcliente, token } = req.body
+    const saldoactual = await ConsultarSaldoActual(id_tienda)
     console.log(saldoactual)
     console.log("\n")
     if (saldoactual != null) {
         if (parseFloat(saldoactual) > parseFloat(total)) {
             await tikecSuspencion(cedula, idcliente, pasarela)
-            let idtransaccion = NumeroAleatorio()
+            const transaccion_id = NumeroAleatorio()
             let optiones = {
-                "token": "SlVGV20ySUFTRWJIT3k5OUdhaGVqUT09",
+                "token": token,
                 "idfactura": idfactura,
                 "pasarela": "RECAUDACION-TIENDAS",
                 "cantidad": total,
-                "nota": pasarela,//
-                //"comision":comision,
-                "idtransaccion": idtransaccion,
+                "nota": pasarela,
+                "idtransaccion": transaccion_id,
                 "fecha": new Date(),
             }
             const { data } = await axios.post(`${process.env.mikrowisp}PaidInvoice`, optiones)
-            console.log(data);
-            console.log("\n")
             if (data.estado == "error") {
                 await reply.send({
                     success: false,
-                    title: "error",
                     msg: `${data.mensaje}`,
                 })
             } else {
-                await guardarTransaccion(idtienda, idcliente, idfactura, idtransaccion, total)
+                await guardarTransaccion(req.body, transaccion_id)
                 let saldo = parseFloat(saldoactual) - parseFloat(total)
-                await actualizarsaldoalpagar(idtienda, saldo)
-                let link = await sacarLinkFactura(idfactura)
-                console.log(link);
+                await actualizarsaldoalpagar(id_tienda, saldo)
                 await reply.send({
                     success: true,
                     data,
-                    link: link,
-                    transacion: idtransaccion
+                    transaccion_id
                 })
             }
         } else {

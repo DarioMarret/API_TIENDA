@@ -3,9 +3,9 @@ import { conexion } from "../database/conexion";
 import axios from "axios";
 moment.locale("es");
 
-export const ConsultarSaldoActual = async (idtienda) => {
+export const ConsultarSaldoActual = async (tienda_id) => {
     try {
-        const result = await conexion.query(`SELECT saldo FROM saldos WHERE idtienda = ?`, [idtienda])
+        const result = await conexion.query(`SELECT tiendas_saldos FROM saldos WHERE tienda_id = ?`, [tienda_id])
         if (result[0].length > 0) {
             return result[0][0].saldo
         } else {
@@ -50,10 +50,15 @@ export const NumeroAleatorio = () => {
     return Math.floor(r)
 }
 
-export const guardarTransaccion = async (idtienda, idcliente, idfactura, idtransaccion, total) => {
+export const guardarTransaccion = async (data, transaccion_id) => {
     try {
+        //idtienda, idcliente, idfactura, idtransaccion, total
+        const { } = data
         let estado = true
-        const result = await conexion.query(`INSERT INTO transaciones (id_tienda,idcliente,idfactura,idtransacion,cantidad,estado) VALUES (?, ?, ?, ?, ?, ?)`, [idtienda, idcliente, idfactura, idtransaccion, total, estado])
+        const result = await conexion.query(`INSERT INTO tiendas_transaciones 
+        (accounts_id, tienda_id, factura_id, transaccion_id, cantidad, recaudacion, idcliente, cedula, telefono, movil, estado fecha_registro)) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
+        [accounts_id, tienda_id, idfactura, transaccion_id, total, recaudacion, idcliente, cedula, telefono, movil, estado, moment.format("YYYY-MM-DD HH:mm:ss")])
         if (result) {
             return result
         }
@@ -71,10 +76,9 @@ export const sacarLinkFactura = async (idfactura) => {
     }
 }
 
-export const actualizarsaldoalpagar = async (idtienda, saldo) => {
+export const actualizarsaldoalpagar = async (tienda_id, saldo) => {
     try {
-        let fecha = new Date()
-        const result = await conexion.query(`UPDATE saldos SET saldo = ?, fecha_saldo = ? WHERE idtienda = ?`, [saldo, fecha, idtienda])
+        const result = await conexion.query(`UPDATE tiendas_saldos SET saldos = ?, fecha_registro = ? WHERE tienda_id = ?`, [saldo, moment.format("YYYY-MM-DD HH:mm:ss", tienda_id)])
         if (result.length > 0) {
             return result[0]
         } else {
