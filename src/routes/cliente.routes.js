@@ -41,15 +41,22 @@ const routes = [
             summary: 'pay factura',
             body: {
                 type: 'object',
-                required: ['pasarela','idtienda','total','comision','idfactura','idcliente','cedula'],
+                required: ['pasarela',
+                    'id_tienda', 'total',
+                    'idfactura', 'idcliente', 'cedula',
+                    'recaudacion', 'cliente', 'accounts_id',
+                    'token'],
                 properties: {
+                    accounts_id: { type: 'number' },
                     pasarela: { type: 'string' },
-                    idtienda: { type: 'string' },
+                    id_tienda: { type: 'string' },
                     total: { type: 'string' },
-                    comision: { type: 'string' },
                     idfactura: { type: 'string' },
                     idcliente: { type: 'string' },
                     cedula: { type: 'string' },
+                    recaudacion: { type: 'string' },
+                    token: { type: 'string' },
+                    cliente: { type: 'string' },
                 }
             }
         },

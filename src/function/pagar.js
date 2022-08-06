@@ -56,9 +56,9 @@ export const guardarTransaccion = async (data, transaccion_id) => {
         const { } = data
         let estado = true
         const result = await conexion.query(`INSERT INTO tiendas_transaciones 
-        (accounts_id, tienda_id, factura_id, transaccion_id, cantidad, recaudacion, idcliente, cedula, telefono, movil, estado fecha_registro)) 
+        (accounts_id, tienda_id, factura_id, transaccion_id, cantidad, recaudacion, idcliente, cliente, cedula, telefono, movil, estado fecha_registro)) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
-        [accounts_id, tienda_id, idfactura, transaccion_id, total, recaudacion, idcliente, cedula, telefono, movil, estado, moment.format("YYYY-MM-DD HH:mm:ss")])
+        [accounts_id, tienda_id, idfactura, transaccion_id, total, recaudacion, idcliente, cliente, cedula, telefono, movil, estado, moment.format("YYYY-MM-DD HH:mm:ss")])
         if (result) {
             return result
         }
