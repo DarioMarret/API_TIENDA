@@ -73,12 +73,12 @@ export const Facturas = async (req, reply) => {
             description += `${index + 1}) ${data.items[0].descrp} \n`
             total += parseFloat(data.factura.total)
         }
-        await reply.send({ description, total })
+        await reply.send({ description, total, idfactura })
     } else {
         const { data } = await axios.post(`${process.env.mikrowisp}GetInvoice`, { idfactura, "token": process.env.token_mikrowisp })
         let description = data.items[0].descrp
         let total = data.factura.total
-        await reply.send({ description, total })
+        await reply.send({ description, total, idfactura })
     }
 }
 
@@ -114,7 +114,7 @@ export const Pagar = async (req, reply) => {
                 await reply.send({
                     success: true,
                     data,
-                    transaccion_id
+                    transaccion_id,
                 })
             }
         } else {
