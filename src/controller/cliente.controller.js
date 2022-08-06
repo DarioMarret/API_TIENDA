@@ -122,7 +122,7 @@ export const Pagar = async (req, reply) => {
                 await reply.send({
                     success: true,
                     data,
-                    transaccion_id,
+                    transacion_id,
                 })
             }
         } else {
