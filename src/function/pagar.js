@@ -50,7 +50,7 @@ export const NumeroAleatorio = () => {
     return Math.floor(r)
 }
 
-export const guardarTransaccion = async (data, transaccion_id) => {
+export const guardarTransaccion = async (data, transacion_id) => {
     try {
         //idtienda, idcliente, idfactura, idtransaccion, total
         const { accounts_id, id_tienda, idfactura, total, recaudacion, idcliente, cliente, cedula, telefono, movil } = data
@@ -58,9 +58,9 @@ export const guardarTransaccion = async (data, transaccion_id) => {
         let fecha_registro = moment().format("YYYY-MM-DD HH:mm:ss");
         console.log(fecha_registro);
         const result = await conexion.query(`INSERT INTO tiendas_transaciones 
-        (accounts_id, tienda_id, factura_id, transaccion_id, cantidad, recaudacion, idcliente, cliente, cedula, telefono, movil, estado, fecha_registro)
+        (accounts_id, tienda_id, factura_id, transacion_id, cantidad, recaudacion, idcliente, cliente, cedula, telefono, movil, estado, fecha_registro)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
-        [accounts_id, id_tienda, idfactura, transaccion_id, total, recaudacion, idcliente, cliente, cedula, telefono, movil, estado, fecha_registro])
+        [accounts_id, id_tienda, idfactura, transacion_id, total, recaudacion, idcliente, cliente, cedula, telefono, movil, estado, fecha_registro])
         if (result) {
             return result
         }

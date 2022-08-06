@@ -99,14 +99,14 @@ export const Pagar = async (req, reply) => {
     if (saldoactual != null) {
         if (parseFloat(saldoactual) > parseFloat(total)) {
             await tikecSuspencion(cedula, idcliente, pasarela)
-            const transaccion_id = NumeroAleatorio()
+            const transacion_id = NumeroAleatorio()
             let optiones = {
                 "token": token,
                 "idfactura": idfactura,
                 "pasarela": "RECAUDACION-TIENDAS",
                 "cantidad": total,
                 "nota": pasarela,
-                "idtransaccion": transaccion_id,
+                "idtransaccion": transacion_id,
                 "fecha": new Date(),
             }
             const { data } = await axios.post(`${process.env.mikrowisp}PaidInvoice`, optiones)
@@ -116,7 +116,7 @@ export const Pagar = async (req, reply) => {
                     msg: `${data.mensaje}`,
                 })
             } else {
-                await guardarTransaccion(req.body, transaccion_id)
+                await guardarTransaccion(req.body, transacion_id)
                 let saldo = parseFloat(saldoactual) - parseFloat(total)
                 await actualizarsaldoalpagar(id_tienda, saldo)
                 await reply.send({
