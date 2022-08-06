@@ -1,5 +1,5 @@
-import moment from "moment";
 import { conexion } from "../database/conexion";
+import moment from "moment";
 import axios from "axios";
 moment.locale("es");
 
@@ -55,10 +55,11 @@ export const guardarTransaccion = async (data, transaccion_id) => {
         //idtienda, idcliente, idfactura, idtransaccion, total
         const { accounts_id, tienda_id, idfactura, total, recaudacion, idcliente, cliente, cedula, telefono, movil } = data
         let estado = true
+        let fecha_registro = moment().format("YYYY-MM-DD HH:mm:ss");
         const result = await conexion.query(`INSERT INTO tiendas_transaciones 
         (accounts_id, tienda_id, factura_id, transaccion_id, cantidad, recaudacion, idcliente, cliente, cedula, telefono, movil, estado fecha_registro)) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
-        [accounts_id, tienda_id, idfactura, transaccion_id, total, recaudacion, idcliente, cliente, cedula, telefono, movil, estado, moment.format("YYYY-MM-DD HH:mm:ss")])
+        [accounts_id, tienda_id, idfactura, transaccion_id, total, recaudacion, idcliente, cliente, cedula, telefono, movil, estado, fecha_registro])
         if (result) {
             return result
         }
@@ -78,8 +79,9 @@ export const sacarLinkFactura = async (idfactura) => {
 
 export const actualizarsaldoalpagar = async (tienda_id, saldo) => {
     try {
+        let fecha_registro = moment().format("YYYY-MM-DD HH:mm:ss");
         const result = await conexion.query(`UPDATE tiendas_saldos SET saldos = ?, fecha_registro = ? WHERE tienda_id = ?`,
-        [saldo, moment.format("YYYY-MM-DD HH:mm:ss"), tienda_id])
+        [saldo, fecha_registro, tienda_id])
         if (result.length > 0) {
             return result[0]
         } else {
