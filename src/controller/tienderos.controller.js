@@ -199,6 +199,24 @@ export const ListarTransaccionesTienda = async (req, reply) => {
     }
 }
 
+export const ListarTransacionesUltimas = async (req, reply) => {
+    try {
+        const tienda = await conexion.query(`SELECT * FROM tiendas_transaciones WHERE tienda_id = ? ORDER BY id DESC LIMIT 5`, [req.params.id]);
+        if (!tienda) {
+            reply.code(500).send({
+                success: false,
+                message: "Error al tienda"
+            });
+        } else {
+            reply.code(200).send({
+                success: true,
+                data: tienda[0]
+            });
+        }
+    } catch (error) {
+        throw new Error("ListarTransacionesUltimas-->  " + error);
+    }
+}
 export const ListarHistorialTienda = async (req, reply) => {
     try {
         const tienda = await conexion.query(`SELECT * FROM tiendas_credito WHERE tienda_id = ? ORDER BY id DESC`, [req.params.id]);
@@ -234,5 +252,32 @@ export const ListarSaldosTienda = async (req, reply) => {
         }
     } catch (error) {
         throw new Error("ListarSaldosTienda-->  " + error);
+    }
+}
+
+export const TotalesCard = async (req, reply) => {
+    try {
+        const tienda = await conexion.query(`SELECT 
+        tiendas_saldos.saldos as saldo,
+        SUM(tiendas_transaciones.cantidad) as transacciones,
+        COUNT(tiendas_transaciones.cantidad) as transacciones_count,
+        SUM(tiendas_transaciones.recaudacion) as recaudacion
+        FROM tiendas_saldos
+        INNER JOIN tiendas_transaciones
+        ON tiendas_saldos.accounts_id = tiendas_transaciones.accounts_id
+        WHERE tiendas_saldos.tienda_id = ?`, [req.params.id]);
+        if (!tienda) {
+            reply.code(500).send({
+                success: false,
+                message: "Error al tienda"
+            });
+        } else {
+            reply.code(200).send({
+                success: true,
+                data: tienda[0][0]
+            });
+        }
+    } catch (error) {
+        throw new Error("TotalesCard-->  " + error);
     }
 }

@@ -1,4 +1,4 @@
-import { DeleteTiendas, ListarHistorialTienda, ListarSaldosTienda, ListarTransaccionesTienda, ListTiendas, ListTiendasCedula, SaveTiendas, UpdateTiendas, UpdateTiendasPassword } from "../controller/tienderos.controller";
+import { DeleteTiendas, ListarHistorialTienda, ListarSaldosTienda, ListarTransaccionesTienda, ListarTransacionesUltimas, ListTiendas, ListTiendasCedula, SaveTiendas, TotalesCard, UpdateTiendas, UpdateTiendasPassword } from "../controller/tienderos.controller";
 import { ValidacionBasic } from "../function/ValidacionBasic";
 
 const routes = [
@@ -180,6 +180,40 @@ const routes = [
         },
         onRequest: ValidacionBasic,
         handler: ListarSaldosTienda
+    },
+    {
+        path: '/api/totalcard/:id',
+        method: 'GET',
+        schema: {
+            summary: 'list totalcard tiendas',
+            params: {
+                type: 'object',
+                required: ['id'],
+                properties: {
+                    id: { type: 'string', description: 'id' },
+                }
+            }
+
+        },
+        onRequest: ValidacionBasic,
+        handler: TotalesCard
+    },
+    {
+        path: '/api/ultimastransaciones/:id',
+        method: 'GET',
+        schema: {
+            summary: 'list ultimastransaciones tiendas',
+            params: {
+                type: 'object',
+                required: ['id'],
+                properties: {
+                    id: { type: 'string', description: 'id' },
+                }
+            }
+
+        },
+        onRequest: ValidacionBasic,
+        handler: ListarTransacionesUltimas
     },
 ]
 
