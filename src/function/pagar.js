@@ -53,7 +53,7 @@ export const NumeroAleatorio = () => {
 export const guardarTransaccion = async (data, transaccion_id) => {
     try {
         //idtienda, idcliente, idfactura, idtransaccion, total
-        const { } = data
+        const { accounts_id, tienda_id, idfactura, total, recaudacion, idcliente, cliente, cedula, telefono, movil } = data
         let estado = true
         const result = await conexion.query(`INSERT INTO tiendas_transaciones 
         (accounts_id, tienda_id, factura_id, transaccion_id, cantidad, recaudacion, idcliente, cliente, cedula, telefono, movil, estado fecha_registro)) 
