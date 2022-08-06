@@ -182,7 +182,7 @@ export const ListTiendasCedula = async (req, reply) => {
 
 export const ListarTransaccionesTienda = async (req, reply) => {
     try {
-        const tienda = await conexion.query(`SELECT * FROM tiendas_transaciones WHERE tienda_id = ?`, [req.params.id]);
+        const tienda = await conexion.query(`SELECT * FROM tiendas_transaciones WHERE tienda_id = ? ORDER BY id DESC`, [req.params.id]);
         if (!tienda) {
             reply.code(500).send({
                 success: false,
