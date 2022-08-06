@@ -13,6 +13,8 @@ import Config from './routes/config.routes'
 import ClientPay from './routes/cliente.routes'
 
 import './database/conexion'
+import moment from 'moment'
+moment.locale('es');
 
 const fastify = Fastify({
     logger: {
@@ -66,7 +68,8 @@ const start = async () => {
         await fastify.listen({ port: process.env.PORT, host: process.env.HOST || '' })
         await fastify.swagger();
         console.log(`server listening on ${process.env.PORT}`);
-
+        let fecha_registro = moment().format("YYYY-MM-DD HH:mm:ss");
+        console.log(fecha_registro);
     } catch (err) {
         fastify.log.error(err);
         process.exit(1);

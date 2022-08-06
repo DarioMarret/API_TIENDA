@@ -43,14 +43,22 @@ export const ShearClient = async (req, reply) => {
                         idfactura: data.id,
                         detalle: `Emitida ${data.emitido} vencimiento ${data.vencimiento} total ${data.total}`,
                         total: parseFloat(data.total),
-                        info: { direccion: dC.direccion_principal, cedula: cedula, fecha_corte: data.vencimiento, total: parseFloat(data.total), idfactura: data.id }
+                        info: { direccion: dC.direccion_principal, 
+                            cedula: cedula, fecha_corte: data.vencimiento, 
+                            total: parseFloat(data.total), idfactura: data.id,
+                            telefono: dC.telefono, movil: dC.movil
+                         }
                     }
                     info.push(x)
                 })
                 reply.send([...info, {
                     idfactura, idcliente, detalle: `Total a pagar ${total}`, total, "success": true,
-                    info: { direccion: dC.direccion_principal, cedula: cedula, fecha_corte: fecha_corte_ultima, total: parseFloat(total), idfactura }
-                }, { datosClient, telefono: dC.telefono, movil: dC.movil }])
+                    info: { direccion: dC.direccion_principal, 
+                        cedula: cedula, fecha_corte: fecha_corte_ultima, 
+                        total: parseFloat(total), idfactura,
+                        telefono: dC.telefono, movil: dC.movil
+                     }
+                }, { datosClient }])
             }
         }
 
