@@ -198,3 +198,22 @@ export const ListarTransaccionesTienda = async (req, reply) => {
         throw new Error("DeleteTiendas-->  " + error);
     }
 }
+
+export const ListarHistorialTienda = async (req, reply) => {
+    try {
+        const tienda = await conexion.query(`SELECT * FROM tiendas_credito WHERE tienda_id = ?`, [req.params.id]);
+        if (!tienda) {
+            reply.code(500).send({
+                success: false,
+                message: "Error al tienda"
+            });
+        } else {
+            reply.code(200).send({
+                success: true,
+                data: tienda[0]
+            });
+        }
+    } catch (error) {
+        throw new Error("DeleteTiendas-->  " + error);
+    }
+}

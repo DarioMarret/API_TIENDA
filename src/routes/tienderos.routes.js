@@ -1,4 +1,4 @@
-import { DeleteTiendas, ListarTransaccionesTienda, ListTiendas, ListTiendasCedula, SaveTiendas, UpdateTiendas, UpdateTiendasPassword } from "../controller/tienderos.controller";
+import { DeleteTiendas, ListarHistorialTienda, ListarTransaccionesTienda, ListTiendas, ListTiendasCedula, SaveTiendas, UpdateTiendas, UpdateTiendasPassword } from "../controller/tienderos.controller";
 import { ValidacionBasic } from "../function/ValidacionBasic";
 
 const routes = [
@@ -146,6 +146,23 @@ const routes = [
         },
         onRequest: ValidacionBasic,
         handler: ListarTransaccionesTienda
+    },
+    {
+        path: '/api/historialcredito/:id',
+        method: 'GET',
+        schema: {
+            summary: 'list historialcredito tiendas',
+            params: {
+                type: 'object',
+                required: ['id'],
+                properties: {
+                    id: { type: 'string', description: 'id' },
+                }
+            }
+
+        },
+        onRequest: ValidacionBasic,
+        handler: ListarHistorialTienda
     },
 ]
 
