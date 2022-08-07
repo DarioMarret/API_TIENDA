@@ -14,6 +14,7 @@ import ClientPay from './routes/cliente.routes'
 
 import './database/conexion'
 import moment from 'moment'
+import { conexion } from './database/conexion'
 moment.locale('es');
 
 const fastify = Fastify({
@@ -70,6 +71,9 @@ const start = async () => {
         console.log(`server listening on ${process.env.PORT}`);
         let fecha_registro = moment().format("YYYY-MM-DD HH:mm:ss");
         console.log(fecha_registro);
+        console.log("\n");
+        let conex = await conexion.query('SELECT NOW()')
+        console.log(conex[0][0]['NOW()']);
     } catch (err) {
         fastify.log.error(err);
         process.exit(1);
