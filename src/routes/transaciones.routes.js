@@ -1,4 +1,4 @@
-import { ListarHistorialCredito, ListarSaldosRecargas, ListarTransaccionesRecargas, ListarTransaccionesTiendas } from "../controller/transaciones.controller";
+import { ListarCard, ListarHistorialCredito, ListarSaldosRecargas, ListarTransaccionesRecargas, ListarTransaccionesTiendas } from "../controller/transaciones.controller";
 import { ValidacionBasic } from "../function/ValidacionBasic";
 
 const routes = [
@@ -50,6 +50,22 @@ const routes = [
         onRequest: ValidacionBasic,
         handler: ListarSaldosRecargas
     },
+    {
+        path: '/api/listarcard/:id',
+        method: 'GET',
+        schema: {
+            summary: 'list listarcard',
+            params: {
+                type: 'object',
+                required: ['id'],
+                properties: {
+                    id: { type: 'string', description: 'id del usuario admin' }
+                }
+            }
+        },
+        onRequest: ValidacionBasic,
+        handler: ListarCard
+    }
 ]
 
 export default routes;

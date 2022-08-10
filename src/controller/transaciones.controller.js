@@ -77,7 +77,6 @@ export const ListarSaldosRecargas = async (req, reply) => {
             INNER JOIN accounts
             ON tienderos_usuarios.accounts_id = accounts.id
             WHERE tienderos_usuarios.accounts_id = ? ORDER BY id DESC`, [accounts_id]);
-            console.log(tienda);
             reply.code(200).send({
                 success: true,
                 data: tienda[0]
@@ -91,7 +90,6 @@ export const ListarSaldosRecargas = async (req, reply) => {
             INNER JOIN accounts
             ON tienderos_usuarios.accounts_id = accounts.id
             ORDER BY id DESC`);
-            console.log(transacciones);
             reply.code(200).send({
                 success: true,
                 data: transacciones[0]
@@ -102,6 +100,7 @@ export const ListarSaldosRecargas = async (req, reply) => {
     }
 }
 
+//falta accion
 export const ListarTiendasMastransaciones = async (req, reply) => {
     try {
         const { role, accounts_id } = await ValidarRole(req.params.id);
@@ -121,6 +120,37 @@ export const ListarTiendasMastransaciones = async (req, reply) => {
             FROM tienderos_usuarios JOIN tiendas_transaciones ON tienderos_usuarios.id = tiendas_transaciones.tienda_id
             GROUP BY tiendas_transaciones.tienda_id
              ORDER BY cantidad DESC LIMIT ?`, [defaul]);
+            reply.code(200).send({
+                success: true,
+                data: transacciones[0]
+            })
+        }
+    } catch (error) {
+        throw new Error("ListarTransaccionesRecargas-->  " + error);
+    }
+}
+
+export const ListarCard = async (req, reply) => {
+    try {
+        const { role, accounts_id } = await ValidarRole(req.params.id);
+        if (role === "administrador") {
+            const tienda = await conexion.query(`SELECT (select count(*) from accounts where id = ${accounts_id})as total_accounts, 
+            (select count(*) from tienderos_usuarios where accounts_id = ${accounts_id})as total_tienda, 
+            (select count(*) from tiendas_transaciones where accounts_id = ${accounts_id})as total_transaciones, 
+            (select sum(tiendas_transaciones.cantidad) from tiendas_transaciones where accounts_id = ${accounts_id})as total, 
+            (select sum(tiendas_transaciones.recaudacion) from tiendas_transaciones where accounts_id = ${accounts_id})as total_recaudado 
+            FROM DUAL`);
+            reply.code(200).send({
+                success: true,
+                data: tienda[0]
+            })
+        } else if (role == "super_admin") {
+            const transacciones = await conexion.query(`SELECT 
+            (select count(*) from accounts)as total_accounts, 
+            (select count(*) from tienderos_usuarios)as total_tienda, 
+            (select count(*) from tiendas_transaciones)as total_transaciones, 
+            (select sum(tiendas_transaciones.cantidad) from tiendas_transaciones)as total, 
+            (select sum(tiendas_transaciones.recaudacion) from tiendas_transaciones)as total_recaudado FROM DUAL`);
             reply.code(200).send({
                 success: true,
                 data: transacciones[0]
