@@ -3,9 +3,9 @@ module.exports = {
     name: "api_tienda",
     script: "./index.js",
     watch: true,
-    max_memory_restart: '500M',
+    max_memory_restart: '1000M',
     exec_mode: 'cluster',
-    instances: 1,
+    instances: 2,
     cron_restart: "59 00 * * *",
     env: {
       NODE_ENV: "production",
