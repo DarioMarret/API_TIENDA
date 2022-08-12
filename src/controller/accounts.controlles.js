@@ -7,7 +7,8 @@ moment.locale("es");
 export const SaveAccount = async (req, reply) => {
     try {
         const { accounts } = req.body;
-        const response = await conexion.query(`INSERT INTO accounts (accounts, fecha ) VALUES (?, ?) `, [accounts, moment().format("YYYY-MM-DD HH:mm:ss")]);
+        let enabled = 0
+        const response = await conexion.query(`INSERT INTO accounts (accounts, enable, fecha ) VALUES (?, ?, ?) `, [accounts, enabled, moment().format("YYYY-MM-DD HH:mm:ss")]);
         if (!response) {
             reply.code(500).send({
                 success: false,
