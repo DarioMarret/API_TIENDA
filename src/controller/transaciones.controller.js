@@ -38,7 +38,7 @@ export const ListarHistorialCredito = async (req, reply) => {
             FROM tiendas_credito 
             INNER JOIN accounts ON tiendas_credito.accounts_id = accounts.id 
             INNER JOIN tienderos_usuarios ON tienderos_usuarios.id = tiendas_credito.tienda_id
-            WHERE accounts_id = ? ORDER BY tiendas_credito.fecha_registro DESC`, [accounts_id]);
+            WHERE tiendas_credito.accounts_id = ? ORDER BY tiendas_credito.fecha_registro DESC`, [accounts_id]);
             reply.code(200).send({
                 success: true,
                 data: tienda[0]
