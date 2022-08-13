@@ -11,7 +11,6 @@ export const LoginAdmin = async (req, reply) => {
     FROM accounts 
     INNER JOIN usuarios_admin  ON usuarios_admin.accounts_id = accounts.id
     WHERE username = ?`, [username]);
-    console.log(response[0])
     if (response[0].length == 0) {
         reply.code(500).send({
             success: false,
@@ -46,6 +45,7 @@ export const LoginTienda = async (req, reply) => {
     FROM tienderos_usuarios 
     INNER JOIN accounts ON tienderos_usuarios.accounts_id = accounts.id
     WHERE usuario = ?`, [username]);
+    console.log(response[0]);
     if (response[0].length == 0) {
         reply.code(500).send({
             success: false,
