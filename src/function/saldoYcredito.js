@@ -35,7 +35,8 @@ async function SandoActula(tienda_id) {
  */
 export async function insertarSaldoHistorialCredito(tienda_id, accounts_id, creditos, transacion, forma_pago, banco, fecha_registro) {
     try {
-        const saldo_actual = await conexion.query(`INSERT INTO tiendas_credito (tienda_id, accounts_id, creditos, transacion, forma_pago, banco, fecha_registro) VALUES (?,?,?,?,?,?,?)`, [tienda_id, accounts_id, creditos, transacion, forma_pago, banco, fecha_registro]);
+        const saldo_actual = await conexion.query(`INSERT INTO tiendas_credito (tienda_id, accounts_id, creditos, transacion, forma_pago, banco, nombre_admin, fecha_registro) 
+        VALUES (?,?,?,?,?,?,?,?)`, [tienda_id, accounts_id, creditos, transacion, forma_pago, banco, nombre_admin, fecha_registro]);
         if (!saldo_actual) {
             return false;
         } else {
@@ -56,7 +57,7 @@ export async function insertarSaldoHistorialCredito(tienda_id, accounts_id, cred
  * @param {*} banco 
  * @returns  {boolean}
  */
-export const Saldos = async (tienda_id, accounts_id, saldo, transacion, forma_pago, banco) => {
+export const Saldos = async (tienda_id, accounts_id, saldo, transacion, forma_pago, banco, nombre_admin) => {
     try {
         let saldo_actual = await SandoActula(tienda_id)
         let nuevosaldo = (parseFloat(saldo_actual) + parseFloat(saldo))
@@ -65,7 +66,7 @@ export const Saldos = async (tienda_id, accounts_id, saldo, transacion, forma_pa
         if (!response) {
             throw new Error("Error al actualizar el saldo");
         } else {
-            await insertarSaldoHistorialCredito(tienda_id, accounts_id, saldo, transacion, forma_pago, banco, fecha_registro)
+            await insertarSaldoHistorialCredito(tienda_id, accounts_id, saldo, transacion, forma_pago, banco, fecha_registro, nombre_admin)
             return saldo_actual;
         }
     } catch (error) {

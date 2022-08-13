@@ -6,13 +6,25 @@ export const ListarTransaccionesTiendas = async (req, reply) => {
         const { role, accounts_id } = await ValidarRole(req.params.id);
         console.log(role, accounts_id);
         if (role === "administrador") {
-            const tienda = await conexion.query(`SELECT * FROM tiendas_transaciones WHERE accounts_id = ? ORDER BY id DESC`, [accounts_id]);
+            const tienda = await conexion.query(`SELECT tiendas_transaciones.id,tiendas_transaciones.accounts_id, 
+            tiendas_transaciones.factura_id, tiendas_transaciones.transacion_id, tiendas_transaciones.cantidad, 
+            tiendas_transaciones.recaudacion, tiendas_transaciones.cliente, tiendas_transaciones.cedula, tiendas_transaciones.telefono, 
+            tiendas_transaciones.movil, tiendas_transaciones.fecha_registro, tienderos_usuarios.nombre_tienda,
+            tiendas_transaciones.ticket 
+            FROM tiendas_transaciones INNER JOIN tienderos_usuarios ON tiendas_transaciones.tienda_id = tienderos_usuarios.id 
+            WHERE tiendas_transaciones.accounts_id = 1 ORDER BY tiendas_transaciones.id DESC`, [accounts_id]);
             reply.code(200).send({
                 success: true,
                 data: tienda[0]
             });
         } else if (role === "super_admin") {
-            const transacciones = await conexion.query(`SELECT * FROM tiendas_transaciones ORDER BY id DESC`);
+            const transacciones = await conexion.query(`SELECT tiendas_transaciones.id,tiendas_transaciones.accounts_id, 
+            tiendas_transaciones.factura_id, tiendas_transaciones.transacion_id, tiendas_transaciones.cantidad, 
+            tiendas_transaciones.recaudacion, tiendas_transaciones.cliente, tiendas_transaciones.cedula, tiendas_transaciones.telefono, 
+            tiendas_transaciones.movil, tiendas_transaciones.fecha_registro, tienderos_usuarios.nombre_tienda,
+            tiendas_transaciones.ticket 
+            FROM tiendas_transaciones INNER JOIN tienderos_usuarios ON tiendas_transaciones.tienda_id = tienderos_usuarios.id 
+            ORDER BY tiendas_transaciones.id DESC`);
             reply.code(200).send({
                 success: true,
                 data: transacciones[0]
@@ -31,6 +43,7 @@ export const ListarHistorialCredito = async (req, reply) => {
             const tienda = await conexion.query(`SELECT 
             tiendas_credito.id, 
             tiendas_credito.creditos, 
+            tiendas_credito.nombre_admin, 
             tiendas_credito.transacion, tiendas_credito.forma_pago, 
             tienderos_usuarios.nombre_tienda,
             tiendas_credito.banco, tiendas_credito.fecha_registro, 
@@ -47,6 +60,7 @@ export const ListarHistorialCredito = async (req, reply) => {
             const transacciones = await conexion.query(`SELECT 
             tiendas_credito.id, 
             tiendas_credito.creditos, 
+            tiendas_credito.nombre_admin,
             tiendas_credito.transacion, tiendas_credito.forma_pago, 
             tienderos_usuarios.nombre_tienda,
             tiendas_credito.banco, tiendas_credito.fecha_registro, 

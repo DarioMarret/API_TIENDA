@@ -3,8 +3,8 @@ import { Saldos } from "../function/saldoYcredito"
 
 export const recargarTienda = async (req, reply) => {
     try {
-        const { tienda_id, accounts_id, saldo, transacion, forma_pago, banco } = req.body
-        const saldo_actual = await Saldos(tienda_id, accounts_id, saldo, transacion, forma_pago, banco)
+        const { tienda_id, accounts_id, saldo, transacion, forma_pago, banco, nombre_admin,  } = req.body
+        const saldo_actual = await Saldos(tienda_id, accounts_id, saldo, transacion, forma_pago, banco, nombre_admin)
         reply.status(200).send({ 
             success: true,
             message: "recargar tienda",
