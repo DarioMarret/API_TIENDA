@@ -6,9 +6,11 @@ moment.locale("es");
 
 export const SaveAccount = async (req, reply) => {
     try {
-        const { accounts } = req.body;
+        const { accounts, host, token } = req.body;
         let enabled = 0
-        const response = await conexion.query(`INSERT INTO accounts (accounts, enable, fecha ) VALUES (?, ?, ?) `, [accounts, enabled, moment().format("YYYY-MM-DD HH:mm:ss")]);
+        let fecha = moment().format("YYYY-MM-DD HH:mm:ss")
+        const response = await conexion.query(`INSERT INTO accounts (accounts, host, token, enable, fecha) VALUES (?, ?, ?, ?, ?) `, 
+        [accounts, host, token, enabled, fecha]);
         if (!response) {
             reply.code(500).send({
                 success: false,

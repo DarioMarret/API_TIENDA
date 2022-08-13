@@ -4,7 +4,13 @@ import jwt from "jsonwebtoken";
 
 export const LoginAdmin = async (req, reply) => {
     const { username, password } = req.body;
-    const response = await conexion.query(`SELECT * FROM usuarios_admin WHERE username = ?`, [username]);
+    const response = await conexion.query(`SELECT 
+    accounts.host, accounts.token, accounts.host_whatsapp, 
+    usuarios_admin.id,usuarios_admin.accounts_id, usuarios_admin.username, 
+    usuarios_admin.role 
+    FROM usuarios_admin 
+    NNER JOIN accounts ON usuarios_admin.accounts_id = accounts.id
+    WHERE username = ?`, [username]);
     if (response[0].length == 0) {
         reply.code(500).send({
             success: false,
