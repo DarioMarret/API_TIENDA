@@ -33,7 +33,7 @@ async function SandoActula(tienda_id) {
  * @param {*} fecha_registro 
  * @returns {boolean}
  */
-export async function insertarSaldoHistorialCredito(tienda_id, accounts_id, creditos, transacion, forma_pago, banco, fecha_registro) {
+export async function insertarSaldoHistorialCredito(tienda_id, accounts_id, creditos, transacion, forma_pago, banco, fecha_registro, nombre_admin) {
     try {
         const saldo_actual = await conexion.query(`INSERT INTO tiendas_credito (tienda_id, accounts_id, creditos, transacion, forma_pago, banco, nombre_admin, fecha_registro) 
         VALUES (?,?,?,?,?,?,?,?)`, [tienda_id, accounts_id, creditos, transacion, forma_pago, banco, nombre_admin, fecha_registro]);
