@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export const LoginAdmin = async (req, reply) => {
     const { username, password } = req.body;
     const response = await conexion.query(`SELECT 
-    accounts.host, accounts.token, accounts.host_whatsapp, accounts.accounts,
+    accounts.host, accounts.token, accounts.host_whatsapp, accounts.accounts,accounts.fecha,
     usuarios_admin.id,usuarios_admin.accounts_id, usuarios_admin.username, 
     usuarios_admin.role 
     FROM accounts 
