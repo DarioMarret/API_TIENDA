@@ -38,7 +38,14 @@ export const LoginAdmin = async (req, reply) => {
 
 export const LoginTienda = async (req, reply) => {
     const { username, password } = req.body;
-    const response = await conexion.query(`SELECT * FROM tienderos_usuarios WHERE usuario = ?`, [username]);
+    const response = await conexion.query(`SELECT 
+    tienderos_usuarios.id, tienderos_usuarios.accounts_id, 
+    tienderos_usuarios.nombre_tienda, tienderos_usuarios.responsable,
+    tienderos_usuarios.cedula, tienderos_usuarios.comision, tienderos_usuarios.token_sistema, tienderos_usuarios.password,
+    tienderos_usuarios.usuario, accounts.host, accounts.token
+    FROM tienderos_usuarios 
+    INNER JOIN accounts ON tienderos_usuarios.accounts_id = accounts.id
+    WHERE usuario = ?`, [username]);
     if (response[0].length == 0) {
         reply.code(500).send({
             success: false,
