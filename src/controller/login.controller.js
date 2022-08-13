@@ -9,7 +9,7 @@ export const LoginAdmin = async (req, reply) => {
     usuarios_admin.id,usuarios_admin.accounts_id, usuarios_admin.username, usuarios_admin.password,
     usuarios_admin.role 
     FROM accounts 
-    NNER JOIN usuarios_admin  ON usuarios_admin.accounts_id = accounts.id
+    INNER JOIN usuarios_admin  ON usuarios_admin.accounts_id = accounts.id
     WHERE username = ?`, [username]);
     if (response[0].length == 0) {
         reply.code(500).send({
