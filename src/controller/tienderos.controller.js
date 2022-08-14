@@ -282,10 +282,10 @@ export const TotalesCard = async (req, reply) => {
 
 export const UpadteTransacionTicket = async (req, reply) => {
     try {
-        const { id, ticket } = req.body;
+        const { numero_control, ticket } = req.body;
         const transaccion = await conexion.query(`UPDATE tiendas_transaciones 
-        SET ticket = ticket  WHERE factura_id = ?`,
-            [ticket, factura_id])
+        SET ticket = ticket  WHERE transacion_id = ?`,
+            [ticket, numero_control])
         if (!transaccion) {
             reply.code(500).send({
                 success: false,

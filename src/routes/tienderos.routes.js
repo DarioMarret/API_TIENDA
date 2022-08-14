@@ -1,4 +1,4 @@
-import { DeleteTiendas, ListarHistorialTienda, ListarSaldosTienda, ListarTransaccionesTienda, ListarTransacionesUltimas, ListTiendas, ListTiendasCedula, SaveTiendas, TotalesCard, UpdateTiendas, UpdateTiendasPassword } from "../controller/tienderos.controller";
+import { DeleteTiendas, ListarHistorialTienda, ListarSaldosTienda, ListarTransaccionesTienda, ListarTransacionesUltimas, ListTiendas, ListTiendasCedula, SaveTiendas, TotalesCard, UpadteTransacionTicket, UpdateTiendas, UpdateTiendasPassword } from "../controller/tienderos.controller";
 import { ValidacionBasic } from "../function/ValidacionBasic";
 
 const routes = [
@@ -221,15 +221,15 @@ const routes = [
             summary: 'insert ticket',
             body: {
                 type: 'object',
-                required: ['ticket', 'factura_id'],
+                required: ['ticket', 'numero_control'],
                 properties: {
                     ticket: { type: 'string', description: 'ticket' },
-                    factura_id: { type: 'string', description: 'factura_id' },
+                    numero_control: { type: 'string', description: 'numero_control' },
                 }
             }
         },
         onRequest: ValidacionBasic,
-        handler: ListarTransacionesUltimas
+        handler: UpadteTransacionTicket
     },
 ]
 
