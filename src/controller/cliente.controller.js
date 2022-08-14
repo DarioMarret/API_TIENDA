@@ -20,7 +20,7 @@ export const ShearClient = async (req, reply) => {
 
             let datosClient = `${dC.nombre} ${dC.estado}`// Correo:${dC.correo} \n contacto:${dC.movil} Direcion:\n ${dC.direccion_principal} \n Cantidad de facturas No pagadas ${dC.facturacion.facturas_nopagadas} Total pendiente:${dC.facturacion.total_facturas}`;
 
-            const response = await axios.post(`${host}/GetInvoices`, { "idcliente": id, "estado": 1, "token": `${host}` })
+            const response = await axios.post(`${host}/GetInvoices`, { "idcliente": id, "estado": 1, "token": token })
             if (response.data.estado == "error") {
                 reply.send({
                     success: true,
