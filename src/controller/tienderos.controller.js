@@ -284,7 +284,7 @@ export const UpadteTransacionTicket = async (req, reply) => {
     try {
         const { numero_control, ticket } = req.body;
         const transaccion = await conexion.query(`UPDATE tiendas_transaciones 
-        SET ticket = ticket  WHERE transacion_id = ?`,
+        SET ticket = ?  WHERE transacion_id = ?`,
             [ticket, numero_control])
         if (!transaccion) {
             reply.code(500).send({
