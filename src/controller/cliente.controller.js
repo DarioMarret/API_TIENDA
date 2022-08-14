@@ -6,6 +6,7 @@ import 'dotenv/config'
 export const ShearClient = async (req, reply) => {
     try {
         const { cedula, host, token } = req.body
+        console.log(req.body)
         const { data } = await axios.post(`${host}/GetClientsDetails`, { cedula, "token": token }) // consultamo cliente
         console.log(data)
         console.log("\n")
