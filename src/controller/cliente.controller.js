@@ -6,7 +6,8 @@ import 'dotenv/config'
 export const ShearClient = async (req, reply) => {
     try {
         const { cedula, host, token } = req.body
-        const { data } = await axios.post(`${host}GetClientsDetails`, { cedula, "token": token }) // consultamo cliente
+        console.log(req.body)
+        const { data } = await axios.post(`${host}GetClientsDetails`, { cedula, "token": `${token}` }) // consultamo cliente
         console.log(data)
         console.log("\n")
         if (data.estado == "error") {
@@ -70,6 +71,7 @@ export const ShearClient = async (req, reply) => {
 
 export const Facturas = async (req, reply) => {
     const { idfactura, host, token } = req.body
+    console.log(req.body)   
     let existe = idfactura.indexOf(',')
     if (existe !== -1) {
         let idfacturaArray = idfactura.split(',')
