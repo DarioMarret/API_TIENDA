@@ -217,17 +217,6 @@ const routes = [
     {
         path: '/api/ticket',
         method: 'PUT',
-        schema: {
-            summary: 'insert ticket',
-            body: {
-                type: 'object',
-                required: ['ticket', 'numero_control'],
-                properties: {
-                    ticket: { type: 'string', description: 'ticket' },
-                    numero_control: { type: 'string', description: 'numero_control' },
-                }
-            }
-        },
         onRequest: ValidacionBasic,
         handler: UpadteTransacionTicket
     },
