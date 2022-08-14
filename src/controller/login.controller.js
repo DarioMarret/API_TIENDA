@@ -17,7 +17,7 @@ export const LoginAdmin = async (req, reply) => {
             message: "Error al iniciar sesion"
         });
     } else {
-        if (response[0][0].enable !== 0) {
+        if (response[0][0].enable != 0) {
             reply.send({
                 success: false,
                 message: "Cuenta deshabilitada"
