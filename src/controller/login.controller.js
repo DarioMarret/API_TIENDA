@@ -17,6 +17,8 @@ export const LoginAdmin = async (req, reply) => {
             message: "Error al iniciar sesion"
         });
     } else {
+        console.log("response", response[0][0])
+        console.log(response[0][0] != 0)
         if (response[0][0].enable != 0) {
             reply.send({
                 success: false,
