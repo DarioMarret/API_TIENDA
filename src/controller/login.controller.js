@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export const LoginAdmin = async (req, reply) => {
     const { username, password } = req.body;
     const response = await conexion.query(`SELECT 
-    accounts.host, accounts.token, accounts.host_whatsapp, accounts.accounts,accounts.fecha,
+    accounts.host, accounts.token, accounts.host_whatsapp, accounts.accounts,accounts.fecha,accounts.enable,
     usuarios_admin.id,usuarios_admin.accounts_id, usuarios_admin.username, usuarios_admin.password,
     usuarios_admin.role 
     FROM accounts 
@@ -17,8 +17,6 @@ export const LoginAdmin = async (req, reply) => {
             message: "Error al iniciar sesion"
         });
     } else {
-        console.log("response", response[0][0])
-        console.log(response[0][0] != 0)
         if (response[0][0].enable != 0) {
             reply.send({
                 success: false,
