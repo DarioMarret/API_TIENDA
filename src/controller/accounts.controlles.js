@@ -66,6 +66,7 @@ export const ListAccounts = async (req, reply) => {
 
 export const updateAccount = async (req, reply) => {
     const { accounts, host, token, host_whatsapp } = req.body;
+    console.log(req.body)
     const response = await conexion.query(`UPDATE accounts SET accounts = ? , host = ? , token = ? , host_whatsapp = ? WHERE id = ?`, 
     [accounts, host, token, host_whatsapp, req.params.id]); 
     if (!response) {
