@@ -16,8 +16,8 @@ export const ConsultarSaldoActual = async (tienda_id) => {
     }
 }
 
-export const tikecSuspencion = async (cedula, idcliente, pasarela) => {
-    const { data } = await axios.post(`${process.env.mikrowisp}GetClientsDetails`, { cedula, "token": `${process.env.token_mikrowisp}` }) // consultamo cliente
+export const tikecSuspencion = async (cedula, idcliente, pasarela, host, token) => {
+    const { data } = await axios.post(`${host}/GetClientsDetails`, { cedula, "token": `${token}` }) // consultamo cliente
     let dC = data.datos[0]
     if (dC.estado == "SUSPENDIDO") {
         console.log("estado a sunspencion", dC.estado)
@@ -29,8 +29,8 @@ export const tikecSuspencion = async (cedula, idcliente, pasarela) => {
         var b = moment(fecha_suspendido);
         let dia_diferancia = a.diff(b, 'days')
         if (dia_diferancia >= 5) {
-            const { data } = await axios.post(`${process.env.mikrowisp}NewTicket`, {
-                "token": `${process.env.token_mikrowisp}`,
+            const { data } = await axios.post(`${host}/NewTicket`, {
+                "token": `${token}`,
                 "idcliente": idcliente,
                 "dp": 2,
                 "asunto": "VERIFICAR FACTURACION",
@@ -69,9 +69,9 @@ export const guardarTransaccion = async (data, transacion_id) => {
     }
 }
 
-export const sacarLinkFactura = async (idfactura) => {
+export const sacarLinkFactura = async (idfactura, host, token) => {
     try {
-        const { data } = await axios.post(`${process.env.mikrowisp}GetInvoice`, { idfactura, "token": `${process.env.token_mikrowisp}` })
+        const { data } = await axios.post(`${host}/GetInvoice`, { idfactura, "token": `${token}` })
         return data.factura.urlpdf
     } catch (error) {
         console.log(error)

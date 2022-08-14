@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 
-export const NoCliente = async (cedula, reply) => {
-    const response = await axios.post(`${process.env.endpoitpre_registro}`, { "token": process.env.token_mikrowisp, cedula })
+export const NoCliente = async (cedula, host, token, reply) => {
+    const response = await axios.post(`${host}/ListInstall`, { "token": token, cedula })
     console.log(response.data)
     console.log("\n")
     try {

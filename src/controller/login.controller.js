@@ -17,19 +17,26 @@ export const LoginAdmin = async (req, reply) => {
             message: "Error al iniciar sesion"
         });
     } else {
-        const x = await comparePassword(password, response[0][0].password)
-        if (x) {
-            delete response[0][0].password
-            var token = jwt.sign(response[0][0], 'speed', { expiresIn: '1h'});
-            reply.send({
-                success: true,
-                data:token
-            });
-        }else{
+        if (response[0][0].enable !== 0) {
             reply.send({
                 success: false,
-                message: "Error al iniciar sesion"
+                message: "Cuenta deshabilitada"
             });
+        }else{
+            const x = await comparePassword(password, response[0][0].password)
+            if (x) {
+                delete response[0][0].password
+                var token = jwt.sign(response[0][0], 'speed', { expiresIn: '1h'});
+                reply.send({
+                    success: true,
+                    data:token
+                });
+            }else{
+                reply.send({
+                    success: false,
+                    message: "Error al iniciar sesion"
+                });
+            }
         }
     }
 }
@@ -41,39 +48,45 @@ export const LoginTienda = async (req, reply) => {
     tienderos_usuarios.id, tienderos_usuarios.accounts_id, 
     tienderos_usuarios.nombre_tienda, tienderos_usuarios.responsable,
     tienderos_usuarios.cedula, tienderos_usuarios.comision, tienderos_usuarios.token_sistema, tienderos_usuarios.password,
-    tienderos_usuarios.usuario, accounts.host, accounts.token
+    tienderos_usuarios.usuario, accounts.host, accounts.token, accounts.enable, accounts.host_whatsapp,
     FROM tienderos_usuarios 
     INNER JOIN accounts ON tienderos_usuarios.accounts_id = accounts.id
     WHERE usuario = ?`, [username]);
-    console.log(response[0]);
     if (response[0].length == 0) {
         reply.code(500).send({
             success: false,
             message: "Error al iniciar sesion"
         });
     } else {
-        const x = await comparePassword(password, response[0][0].password)
-        console.log(x)
-        console.log("\n")
-        if (x) {
-            delete response[0][0].password
-            if (response[0][0].token_sistema.length > 0) {
-                var token = jwt.sign(response[0][0], 'speed', { expiresIn: '1h'});
-                reply.send({
-                    success: true,
-                    data: token
-                });
+        if(response[0][0].enable !== 0){
+            reply.send({
+                success: false,
+                message: "Cuenta deshabilitada"
+            });
+        }else{
+            const x = await comparePassword(password, response[0][0].password)
+            console.log(x)
+            console.log("\n")
+            if (x) {
+                delete response[0][0].password
+                if (response[0][0].token_sistema.length > 0) {
+                    var token = jwt.sign(response[0][0], 'speed', { expiresIn: '1h'});
+                    reply.send({
+                        success: true,
+                        data: token
+                    });
+                }else{
+                    reply.send({
+                        success: false,
+                        message: "No tiene token asignado"
+                    });
+                }
             }else{
                 reply.send({
                     success: false,
-                    message: "No tiene token asignado"
+                    message: "Calve o usuario incorrecto"
                 });
             }
-        }else{
-            reply.send({
-                success: false,
-                message: "Calve o usuario incorrecto"
-            });
         }
     }
 }

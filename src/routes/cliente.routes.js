@@ -55,7 +55,7 @@ const routes = [
                     idcliente: { type: 'string' },
                     cedula: { type: 'string' },
                     recaudacion: { type: 'string' },
-                    token: { type: 'string' },
+                    token_sistema: { type: 'string' },
                     cliente: { type: 'string' },
                 }
             }

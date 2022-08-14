@@ -14,7 +14,6 @@ const routes = [
                     id: { type: 'string', description: 'id' },
                 }
             }
-
         },
         onRequest: ValidacionBasic,
         handler: ListTiendas
@@ -211,6 +210,23 @@ const routes = [
                 }
             }
 
+        },
+        onRequest: ValidacionBasic,
+        handler: ListarTransacionesUltimas
+    },
+    {
+        path: '/api/ticket',
+        method: 'PUT',
+        schema: {
+            summary: 'insert ticket',
+            body: {
+                type: 'object',
+                required: ['ticket', 'factura_id'],
+                properties: {
+                    ticket: { type: 'string', description: 'ticket' },
+                    factura_id: { type: 'string', description: 'factura_id' },
+                }
+            }
         },
         onRequest: ValidacionBasic,
         handler: ListarTransacionesUltimas

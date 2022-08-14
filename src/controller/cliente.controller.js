@@ -5,13 +5,13 @@ import 'dotenv/config'
 
 export const ShearClient = async (req, reply) => {
     try {
-        const { cedula } = req.body
-        const { data } = await axios.post(`${process.env.mikrowisp}GetClientsDetails`, { cedula, "token": process.env.token_mikrowisp }) // consultamo cliente
+        const { cedula, host, token } = req.body
+        const { data } = await axios.post(`${host}GetClientsDetails`, { cedula, "token": token }) // consultamo cliente
         console.log(data)
         console.log("\n")
         if (data.estado == "error") {
 
-            await NoCliente(cedula, reply) // crear funcion de no cliente 
+            await NoCliente(cedula, host, token, reply) // crear funcion de no cliente 
 
         } else {
 
@@ -20,7 +20,7 @@ export const ShearClient = async (req, reply) => {
 
             let datosClient = `${dC.nombre} ${dC.estado}`// Correo:${dC.correo} \n contacto:${dC.movil} Direcion:\n ${dC.direccion_principal} \n Cantidad de facturas No pagadas ${dC.facturacion.facturas_nopagadas} Total pendiente:${dC.facturacion.total_facturas}`;
 
-            const response = await axios.post(`${process.env.mikrowisp}GetInvoices`, { "idcliente": id, "estado": 1, "token": `${process.env.token_mikrowisp}` })
+            const response = await axios.post(`${host}GetInvoices`, { "idcliente": id, "estado": 1, "token": `${host}` })
             if (response.data.estado == "error") {
                 reply.send({
                     success: true,
@@ -69,7 +69,7 @@ export const ShearClient = async (req, reply) => {
 
 
 export const Facturas = async (req, reply) => {
-    const { idfactura } = req.body
+    const { idfactura, host, token } = req.body
     let existe = idfactura.indexOf(',')
     if (existe !== -1) {
         let idfacturaArray = idfactura.split(',')
@@ -77,13 +77,13 @@ export const Facturas = async (req, reply) => {
         let description = ""
         for (let index = 0; index < idfacturaArray.length; index++) {
             let idfactura = idfacturaArray[index];
-            const { data } = await axios.post(`${process.env.mikrowisp}GetInvoice`, { idfactura, "token": process.env.token_mikrowisp })
+            const { data } = await axios.post(`${host}GetInvoice`, { idfactura, "token": token })
             description += `${index + 1}) ${data.items[0].descrp} \n`
             total += parseFloat(data.factura.total)
         }
         await reply.send({ description, total, idfactura })
     } else {
-        const { data } = await axios.post(`${process.env.mikrowisp}GetInvoice`, { idfactura, "token": process.env.token_mikrowisp })
+        const { data } = await axios.post(`${host}GetInvoice`, { idfactura, "token": token })
         let description = data.items[0].descrp
         let total = data.factura.total
         await reply.send({ description, total, idfactura })
@@ -92,16 +92,16 @@ export const Facturas = async (req, reply) => {
 
 
 export const Pagar = async (req, reply) => {
-    const { cedula, idfactura, total, pasarela, id_tienda, idcliente, token } = req.body
+    const { cedula, idfactura, total, pasarela, id_tienda, idcliente, token_sistema, host, token} = req.body
     const saldoactual = await ConsultarSaldoActual(id_tienda)
     console.log(saldoactual)
     console.log("\n")
     if (saldoactual != null) {
         if (parseFloat(saldoactual) > parseFloat(total)) {
-            await tikecSuspencion(cedula, idcliente, pasarela)
+            await tikecSuspencion(cedula, idcliente, pasarela, host, token)
             const transacion_id = NumeroAleatorio()
             let optiones = {
-                "token": token,
+                "token": token_sistema,
                 "idfactura": idfactura,
                 "pasarela": "RECAUDACION-TIENDAS",
                 "cantidad": total,
@@ -109,16 +109,16 @@ export const Pagar = async (req, reply) => {
                 "idtransaccion": transacion_id,
                 "fecha": new Date(),
             }
-            const { data } = await axios.post(`${process.env.mikrowisp}PaidInvoice`, optiones)
+            const { data } = await axios.post(`${host}PaidInvoice`, optiones)
             if (data.estado == "error") {
                 await reply.send({
                     success: false,
                     msg: `${data.mensaje}`,
                 })
             } else {
-                await guardarTransaccion(req.body, transacion_id)
+                await guardarTransaccion(req.body, transacion_id, host, token)
                 let saldo = parseFloat(saldoactual) - parseFloat(total)
-                await actualizarsaldoalpagar(id_tienda, saldo)
+                await actualizarsaldoalpagar(id_tienda, saldo, host, token)
                 await reply.send({
                     success: true,
                     data,

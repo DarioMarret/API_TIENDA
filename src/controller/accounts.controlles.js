@@ -6,11 +6,12 @@ moment.locale("es");
 
 export const SaveAccount = async (req, reply) => {
     try {
-        const { accounts, host, token } = req.body;
+        const { accounts, host, token, host_whatsapp } = req.body;
         let enabled = 0
         let fecha = moment().format("YYYY-MM-DD HH:mm:ss")
-        const response = await conexion.query(`INSERT INTO accounts (accounts, host, token, enable, fecha) VALUES (?, ?, ?, ?, ?) `, 
-        [accounts, host, token, enabled, fecha]);
+        const response = await conexion.query(`INSERT INTO accounts (accounts, host, token, host_whatsapp, enable, fecha) 
+        VALUES (?, ?, ?, ?, ?, ?) `, 
+        [accounts, host, token, host_whatsapp, enabled, fecha]);
         if (!response) {
             reply.code(500).send({
                 success: false,
@@ -29,7 +30,6 @@ export const SaveAccount = async (req, reply) => {
 
 export const ListAccounts = async (req, reply) => {
     const { role, accounts_id } = await ValidarRole(req.params.id);
-    // console.log(await estadoAccounts(accounts_id));
     if (role == "administrador") {
         const accounts = await conexion.query(`SELECT * FROM accounts WHERE id = ? AND enable = 0`, [accounts_id]);
         console.log("accounts",accounts[0])
@@ -65,8 +65,9 @@ export const ListAccounts = async (req, reply) => {
 
 
 export const updateAccount = async (req, reply) => {
-    const { accounts } = req.body;
-    const response = await conexion.query(`UPDATE accounts SET accounts = ?  WHERE id = ?`, [accounts, req.params.id]);
+    const { accounts, host, token, host_whatsapp } = req.body;
+    const response = await conexion.query(`UPDATE accounts SET accounts = ? , host = ? , token = ? , host_whatsapp = ? WHERE id = ?`, 
+    [accounts, host, token, host_whatsapp, req.params.id]); 
     if (!response) {
         reply.code(500).send({
             success: false,
