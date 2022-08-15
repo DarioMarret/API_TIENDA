@@ -1,4 +1,4 @@
-import { actualizarsaldoalpagar, ConsultarSaldoActual, guardarTransaccion, NumeroAleatorio, tikecSuspencion } from '../function/pagar'
+import { actualizarsaldoalpagar, ConsultarSaldoActual, guardarTransaccion, NumeroAleatorio, sacarLinkFactura, tikecSuspencion } from '../function/pagar'
 import { NoCliente } from '../function/NoCliente'
 import axios from 'axios'
 import 'dotenv/config'
@@ -121,9 +121,11 @@ export const Pagar = async (req, reply) => {
                 await guardarTransaccion(req.body, transacion_id, host, token)
                 let saldo = parseFloat(saldoactual) - parseFloat(total)
                 await actualizarsaldoalpagar(id_tienda, saldo, host, token)
+                let link = await sacarLinkFactura(idfactura, host, token)
                 await reply.send({
                     success: true,
                     data,
+                    link: link,
                     transacion_id,
                 })
             }

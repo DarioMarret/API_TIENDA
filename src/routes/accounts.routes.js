@@ -25,17 +25,17 @@ const routes = [
     {
         path: '/api/accounts',
         method: 'POST',
-        schema: {
-            summary: 'created account',
-            body: {
-                type: 'object',
-                required: ['accounts'],
-                properties: {
-                    accounts: { type: 'string', description: 'accounts' },  
+        // schema: {
+        //     summary: 'created account',
+        //     body: {
+        //         type: 'object',
+        //         required: ['accounts'],
+        //         properties: {
+        //             accounts: { type: 'string', description: 'accounts' },  
                     
-                }
-            }
-        },
+        //         }
+        //     }
+        // },
         onRequest: ValidacionBasic,
         handler: SaveAccount
     },

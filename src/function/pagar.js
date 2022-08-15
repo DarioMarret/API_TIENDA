@@ -71,7 +71,7 @@ export const guardarTransaccion = async (data, transacion_id) => {
 
 export const sacarLinkFactura = async (idfactura, host, token) => {
     try {
-        const { data } = await axios.post(`${host}/GetInvoice`, { idfactura, "token": `${token}` })
+        const { data } = await axios.post(`${host}/GetInvoice`, { idfactura, "token": token })
         return data.factura.urlpdf
     } catch (error) {
         console.log(error)
