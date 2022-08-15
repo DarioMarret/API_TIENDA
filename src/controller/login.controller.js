@@ -48,7 +48,7 @@ export const LoginTienda = async (req, reply) => {
     tienderos_usuarios.id, tienderos_usuarios.accounts_id, 
     tienderos_usuarios.nombre_tienda, tienderos_usuarios.responsable,
     tienderos_usuarios.cedula, tienderos_usuarios.comision, tienderos_usuarios.token_sistema, tienderos_usuarios.password,
-    tienderos_usuarios.usuario, accounts.host, accounts.token, accounts.enable, accounts.host_whatsapp
+    tienderos_usuarios.usuario, accounts.accounts, accounts.host, accounts.token, accounts.enable, accounts.host_whatsapp
     FROM tienderos_usuarios 
     INNER JOIN accounts ON tienderos_usuarios.accounts_id = accounts.id
     WHERE usuario = ?`, [username]);
