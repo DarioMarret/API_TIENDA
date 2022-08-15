@@ -12,7 +12,7 @@ export const ListarTransaccionesTiendas = async (req, reply) => {
             tiendas_transaciones.movil, tiendas_transaciones.fecha_registro, tienderos_usuarios.nombre_tienda,
             tiendas_transaciones.ticket 
             FROM tiendas_transaciones INNER JOIN tienderos_usuarios ON tiendas_transaciones.tienda_id = tienderos_usuarios.id 
-            WHERE tiendas_transaciones.accounts_id = 1 ORDER BY tiendas_transaciones.id DESC`, [accounts_id]);
+            WHERE tiendas_transaciones.accounts_id = ? ORDER BY tiendas_transaciones.id DESC`, [accounts_id]);
             reply.code(200).send({
                 success: true,
                 data: tienda[0]
