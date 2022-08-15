@@ -7,6 +7,7 @@ moment.locale("es");
 export const SaveAccount = async (req, reply) => {
     try {
         const { accounts, host, token, host_whatsapp } = req.body;
+        console.log(req.body)
         let enabled = 0
         let fecha = moment().format("YYYY-MM-DD HH:mm:ss")
         const response = await conexion.query(`INSERT INTO accounts (accounts, host, token, host_whatsapp, enable, fecha) 
