@@ -16,7 +16,7 @@ export const ListTiendas = async (req, reply) => {
             tienda = await conexion.query(`SELECT 
             tienderos_usuarios.id,tienderos_usuarios.accounts_id, accounts.accounts, tienderos_usuarios.nombre_tienda, 
             tienderos_usuarios.responsable, tienderos_usuarios.cedula, tienderos_usuarios.comision, tienderos_usuarios.token_sistema, 
-            tienderos_usuarios.direccion,tienderos_usuarios.usuario,
+            tienderos_usuarios.direccion,tienderos_usuarios.usuario,tienderos_usuarios.direccion, tienderos_usuarios.telefono,tienderos_usuarios.password,
             tiendas_saldos.saldos FROM tienderos_usuarios 
             INNER JOIN tiendas_saldos 
             ON tienderos_usuarios.id = tiendas_saldos.tienda_id
@@ -25,7 +25,9 @@ export const ListTiendas = async (req, reply) => {
             WHERE tienderos_usuarios.accounts_id = ?`, [accounts_id])
         } else if (role == "super_admin" && estadoA == true) {
             tienda = await conexion.query(`SELECT 
-            tienderos_usuarios.id,tienderos_usuarios.accounts_id, accounts.accounts, tienderos_usuarios.nombre_tienda, tienderos_usuarios.responsable, tienderos_usuarios.cedula, tienderos_usuarios.comision, tienderos_usuarios.token_sistema, tienderos_usuarios.direccion,tienderos_usuarios.usuario,
+            tienderos_usuarios.id,tienderos_usuarios.accounts_id, accounts.accounts, tienderos_usuarios.nombre_tienda, 
+            tienderos_usuarios.responsable, tienderos_usuarios.cedula, tienderos_usuarios.comision, tienderos_usuarios.token_sistema, 
+            tienderos_usuarios.direccion,tienderos_usuarios.usuario, tienderos_usuarios.direccion, tienderos_usuarios.telefono,tienderos_usuarios.password,
             tiendas_saldos.saldos FROM tienderos_usuarios 
             INNER JOIN tiendas_saldos 
             ON tienderos_usuarios.id = tiendas_saldos.tienda_id
