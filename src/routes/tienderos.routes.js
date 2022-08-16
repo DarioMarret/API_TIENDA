@@ -88,16 +88,8 @@ const routes = [
         method: 'PUT',
         schema: {
             summary: 'cambiar password',
-            params: {
-                type: 'object',
-                required: ['id'],
-                properties: {
-                    id: { type: 'number',description: 'id'},
-                }
-            },
-            required: ['account_id','nombre_tienda','responsable','cedula','token_sistema','password','usuario'],
+            required: ['nombre_tienda','responsable','cedula','token_sistema','usuario'],
             properties: {
-                account_id: { type: 'number',description: 'account_id'},
                 nombre_tienda: { type: 'string', description: 'nombre_tienda' },
                 responsable: { type: 'string', description: 'responsable' },
                 cedula: { type: 'string', description: 'cedula' },

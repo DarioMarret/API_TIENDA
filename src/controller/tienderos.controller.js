@@ -113,21 +113,42 @@ export const UpdateTiendasPassword = async (req, reply) => {
     }
 }
 
+
 export const UpdateTiendas = async (req, reply) => {
     try {
-        const { nombre_tienda, responsable, cedula, comision, token_sistema, direccion, usuario, telefono } = req.body;
+        const { id, nombre_tienda, responsable, cedula, comision, token_sistema, usuario, password, new_password, direccion, telefono } = req.body;
+        let hash = await hashPassword(new_password)
         comision == null ? 0.50 : parseFloat(comision);
-        const tienda = await conexion.query(`UPDATE tienderos_usuarios SET nombre_tienda = ?, responsable = ?, cedula = ?, comision = ?, token_sistema = ?, direccion = ?, usuario = ?, telefono = ? WHERE id = ?`, [nombre_tienda, responsable, cedula, comision, token_sistema, direccion, usuario, telefono, req.params.id]);
-        if (!tienda) {
-            reply.code(500).send({
-                success: false,
-                message: "Error al actualizar la tienda"
-            });
-        } else {
-            reply.code(200).send({
-                success: true,
-                message: "Tienda actualizada"
-            });
+        if(new_password != ""){
+            const tienda = await conexion.query(`UPDATE tienderos_usuarios 
+            SET nombre_tienda = ?, responsable = ?, cedula = ?, comision = ?, token_sistema = ?, direccion = ?, usuario = ?, telefono = ? WHERE id = ?`, 
+            [nombre_tienda, responsable, cedula, comision, token_sistema, direccion, usuario, telefono, id]);
+            if (!tienda) {
+                reply.code(500).send({
+                    success: false,
+                    message: "Error al actualizar la tienda"
+                });
+            } else {
+                reply.code(200).send({
+                    success: true,
+                    message: "Tienda actualizada"
+                });
+            }
+        }else{
+            const tienda = await conexion.query(`UPDATE tienderos_usuarios 
+            SET nombre_tienda = ?, responsable = ?, cedula = ?, comision = ?, token_sistema = ?, direccion = ?, usuario = ?, telefono = ?, password = ? WHERE id = ?`, 
+            [nombre_tienda, responsable, cedula, comision, token_sistema, direccion, usuario, telefono, hash, id]);
+            if (!tienda) {
+                reply.code(500).send({
+                    success: false,
+                    message: "Error al actualizar la tienda"
+                });
+            } else {
+                reply.code(200).send({
+                    success: true,
+                    message: "Tienda actualizada"
+                });
+            }
         }
     } catch (error) {
         throw new Error("UpdateTiendas-->  " + error);
