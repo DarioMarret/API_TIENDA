@@ -8,6 +8,7 @@ export const Preregistro = async (req, reply) => {
     const { accounts_id, tienda_id, token, cliente, cedula, direccion, telefono, movil, email, notas } = req.body;
     let fecha_instalacion = moment().format("YYYY-MM-DD HH:mm:ss");
     let estado_aprobado = "PENDIENTE";
+    let canjear = "---";
     const respuesta = await conexion.query(`INSERT INTO preregistros 
     (accounts_id, tienda_id, token, cliente, cedula, direccion, telefono, movil, email, notas, fecha_instalacion, estado_aprobado, canjear) 
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`, 
