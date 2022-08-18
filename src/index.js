@@ -12,6 +12,7 @@ import Login from './routes/login.routes'
 import Config from './routes/config.routes'
 import ClientPay from './routes/cliente.routes'
 import Transaciones from './routes/transaciones.routes'
+import PreRegistro from './routes/preregistro.routes'
 
 import './database/conexion'
 import moment from 'moment'
@@ -65,6 +66,10 @@ fastify.register(async fastify => {
     Transaciones.forEach(route => {
         fastify.route(route)
     });
+
+    PreRegistro.forEach(route => {
+        fastify.route(route)
+    })
 
 })
 
