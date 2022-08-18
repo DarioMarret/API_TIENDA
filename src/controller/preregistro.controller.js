@@ -11,7 +11,7 @@ export const Preregistro = async (req, reply) => {
     let canjear = "---";
     const respuesta = await conexion.query(`INSERT INTO preregistros 
     (accounts_id, tienda_id, token, cliente, cedula, direccion, telefono, movil, email, notas, fecha_instalacion, estado_aprobado, canjear) 
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`, 
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`, 
     [accounts_id, tienda_id, token, cliente, cedula, direccion, telefono, movil, email, notas, fecha_instalacion, estado_aprobado, canjear])
     if (!respuesta) {
         reply.code(500).send({
