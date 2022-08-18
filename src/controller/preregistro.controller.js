@@ -8,7 +8,7 @@ export const Preregistro = async (req, reply) => {
     const { accounts_id, tienda_id, token, cliente, cedula, direccion, telefono, movil, email, notas } = req.body;
     let fecha_instalacion = moment().format("YYYY-MM-DD HH:mm:ss");
     let estado_aprobado = "PENDIENTE";
-    const respuesta = await conexion.query(`INSERT INTO preregistro 
+    const respuesta = await conexion.query(`INSERT INTO preregistros 
     (accounts_id, tienda_id, token, cliente, cedula, direccion, telefono, movil, email, notas, fecha_instalacion, estado_aprobado, canjear) 
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`, 
     [accounts_id, tienda_id, token, cliente, cedula, direccion, telefono, movil, email, notas, fecha_instalacion, estado_aprobado, canjear])
@@ -40,7 +40,7 @@ export const Preregistro = async (req, reply) => {
 export const PreregistroAprobar = async (req, reply) => {
     const { tienda_id } = req.body;
     let fecha_aprobado = moment().format("YYYY-MM-DD HH:mm:ss");
-    const respuesta = await conexion.query(`UPDATE preregistro SET estado_aprobado = true, fecha_aprobado = ? WHERE tienda_id = ?`,
+    const respuesta = await conexion.query(`UPDATE preregistros SET estado_aprobado = true, fecha_aprobado = ? WHERE tienda_id = ?`,
     [fecha_aprobado, tienda_id])
     if (!respuesta) {
         reply.code(500).send({
@@ -58,7 +58,7 @@ export const PreregistroAprobar = async (req, reply) => {
 
 export const ListarPreRegistroTienda = async (req, reply) => {
     const { tienda_id } = req.body;
-    const respuesta = await conexion.query(`SELECT * FROM preregistro WHERE tienda_id = ?`, [tienda_id])
+    const respuesta = await conexion.query(`SELECT * FROM preregistros WHERE tienda_id = ?`, [tienda_id])
     if (!respuesta) {
         reply.code(500).send({
             success: false,
