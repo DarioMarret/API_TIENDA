@@ -51,7 +51,7 @@ export const PreregistroAprobar = async (req, reply) => {
         reply.code(200).send({
             success: true,
             message: "Registro guardado",
-            tienda_id: respuesta[0].insertId
+            data: respuesta[0].insertId
         });
     }
 }
