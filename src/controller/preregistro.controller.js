@@ -32,7 +32,7 @@ export const Preregistro = async (req, reply) => {
         reply.code(200).send({
             success: true,
             message: "Registro guardado",
-            tienda_id: respuesta[0].insertId
+            data: respuesta[0]
         });
     }
 }
@@ -51,7 +51,7 @@ export const PreregistroAprobar = async (req, reply) => {
         reply.code(200).send({
             success: true,
             message: "Registro guardado",
-            data: respuesta[0].insertId
+            data: respuesta[0]
         });
     }
 }
@@ -68,7 +68,7 @@ export const ListarPreRegistroTienda = async (req, reply) => {
         reply.code(200).send({
             success: true,
             message: "Registro guardado",
-            tienda_id: respuesta[0]
+            data: respuesta[0]
         });
     }
 }
