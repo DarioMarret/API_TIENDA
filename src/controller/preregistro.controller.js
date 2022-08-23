@@ -83,6 +83,7 @@ export const ListarPreRegistroTiendaAdmin = async (req, reply) => {
         const tienda = await conexion.query(`SELECT preregistros.id, 
         preregistros.cliente, preregistros.cedula, preregistros.direccion, 
         preregistros.telefono, preregistros.movil, preregistros.email, preregistros.notas, preregistros.fecha_instalacion,
+        preregistros.estado_aprobado,
         accounts.accounts, tienderos_usuarios.nombre_tienda
         FROM preregistros 
         INNER JOIN tienderos_usuarios ON preregistros.tienda_id = tienderos_usuarios.id 
@@ -96,6 +97,7 @@ export const ListarPreRegistroTiendaAdmin = async (req, reply) => {
         const respuesta = await conexion.query(`SELECT preregistros.id, 
         preregistros.cliente, preregistros.cedula, preregistros.direccion, 
         preregistros.telefono, preregistros.movil, preregistros.email, preregistros.notas, preregistros.fecha_instalacion,
+        preregistros.estado_aprobado,
         accounts.accounts, tienderos_usuarios.nombre_tienda
         FROM preregistros 
         INNER JOIN tienderos_usuarios ON preregistros.tienda_id = tienderos_usuarios.id 
