@@ -14,9 +14,12 @@ import ClientPay from './routes/cliente.routes'
 import Transaciones from './routes/transaciones.routes'
 import PreRegistro from './routes/preregistro.routes'
 
+import { conexion } from './database/conexion'
+import { ConPre } from './function/validarPre'
+
 import './database/conexion'
 import moment from 'moment'
-import { conexion } from './database/conexion'
+import cron from 'node-cron'
 moment.locale('es');
 
 const fastify = Fastify({
@@ -72,6 +75,16 @@ fastify.register(async fastify => {
     })
 
 })
+
+cron.schedule("* 23 * * *", async() => {
+    await ConPre()
+});
+
+
+(async()=>{
+    await ConPre()
+})()
+
 
 
 const start = async () => {
