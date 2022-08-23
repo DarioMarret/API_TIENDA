@@ -30,7 +30,7 @@ export const Preregistro = async (req, reply) => {
             "notas": notas,
             "fecha_instalacion": fecha_instalacion
         })
-        const { data } = await axios.post('https://demo.mikrosystem.net/api/v1/NewPreRegistro', {
+        const { data } = await axios.post('http:/45.224.96.50/api/v1/NewPreRegistro', {
             "token": token,
             "cliente": cliente,
             "cedula": cedula,
