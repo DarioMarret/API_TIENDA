@@ -19,7 +19,7 @@ export const Preregistro = async (req, reply) => {
             message: "Error al guardar el registro"
         });
     } else {
-        await axios.post('https://demo.mikrosystem.net/api/v1/NewPreRegistro', {
+        const { data } = await axios.post('https://demo.mikrosystem.net/api/v1/NewPreRegistro', {
             "token": token,
             "cliente": cliente,
             "cedula": cedula,
@@ -30,6 +30,8 @@ export const Preregistro = async (req, reply) => {
             "notas": notas,
             "fecha_instalacion": fecha_instalacion
           })
+          console.log(data)
+          console.log("\n")
         reply.code(200).send({
             success: true,
             message: "Registro guardado",
