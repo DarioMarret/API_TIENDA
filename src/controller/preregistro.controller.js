@@ -1,6 +1,7 @@
 import { conexion } from "../database/conexion";
 import moment from "moment";
 import axios from "axios";
+import { ValidarRole } from "../function/validarRole";
 
 moment.locale("es");
 
@@ -19,17 +20,6 @@ export const Preregistro = async (req, reply) => {
             message: "Error al guardar el registro"
         });
     } else {
-        console.log({
-            "token": token,
-            "cliente": cliente,
-            "cedula": cedula,
-            "direccion": direccion,
-            "telefono": telefono,
-            "movil": movil,
-            "email": email,
-            "notas": notas,
-            "fecha_instalacion": fecha_instalacion
-        })
         const { data } = await axios.post('http://45.224.96.50/api/v1/NewPreRegistro', {
             "token": token,
             "cliente": cliente,
