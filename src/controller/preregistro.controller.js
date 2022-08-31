@@ -83,7 +83,7 @@ export const ListarPreRegistroTiendaAdmin = async (req, reply) => {
         const tienda = await conexion.query(`SELECT preregistros.id, 
         preregistros.cliente, preregistros.cedula, preregistros.direccion, 
         preregistros.telefono, preregistros.movil, preregistros.email, preregistros.notas, preregistros.fecha_instalacion,
-        preregistros.estado_aprobado,
+        preregistros.estado_aprobado, preregistros.canjear,
         accounts.accounts, tienderos_usuarios.nombre_tienda
         FROM preregistros 
         INNER JOIN tienderos_usuarios ON preregistros.tienda_id = tienderos_usuarios.id 
@@ -97,13 +97,31 @@ export const ListarPreRegistroTiendaAdmin = async (req, reply) => {
         const respuesta = await conexion.query(`SELECT preregistros.id, 
         preregistros.cliente, preregistros.cedula, preregistros.direccion, 
         preregistros.telefono, preregistros.movil, preregistros.email, preregistros.notas, preregistros.fecha_instalacion,
-        preregistros.estado_aprobado,
+        preregistros.estado_aprobado, preregistros.canjear,
         accounts.accounts, tienderos_usuarios.nombre_tienda
         FROM preregistros 
         INNER JOIN tienderos_usuarios ON preregistros.tienda_id = tienderos_usuarios.id 
         INNER JOIN accounts ON accounts.id = preregistros.accounts_id`)
         reply.code(200).send({
             success: true,
+            data: respuesta[0]
+        });
+    }
+}
+
+export const AcreditarPreRegistro = async (req, reply) => {
+    const { id, canjear } = req.body;
+    const respuesta = await conexion.query(`UPDATE preregistros SET canjear = ? WHERE id = ?`,
+    [canjear, id])
+    if (!respuesta) {
+        reply.code(500).send({
+            success: false,
+            message: "Error al guardar el registro"
+        });
+    } else {
+        reply.code(200).send({
+            success: true,
+            message: "Registro guardado",
             data: respuesta[0]
         });
     }

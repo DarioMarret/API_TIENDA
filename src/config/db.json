@@ -1,7 +1,7 @@
 {
   "host"                 : "localhost",
   "user"                 : "root",
-  "password"             : "root",
+  "password"             : "sp202ghtsqb.qwdhg.",
   "database"             : "tienda",
   "waitForConnections"   : true,
   "connectionLimit"      : 10

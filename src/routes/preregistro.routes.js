@@ -1,4 +1,4 @@
-import { ListarPreRegistroTienda, ListarPreRegistroTiendaAdmin, Preregistro } from "../controller/preregistro.controller"
+import { AcreditarPreRegistro, ListarPreRegistroTienda, ListarPreRegistroTiendaAdmin, Preregistro } from "../controller/preregistro.controller"
 import { ValidacionBasic } from "../function/ValidacionBasic"
 
 
@@ -22,6 +22,12 @@ const routes = [
         method: 'GET',
         onRequest: ValidacionBasic,
         handler: ListarPreRegistroTiendaAdmin
+    },
+    {
+        path: '/api/canjear',
+        method: 'POST',
+        onRequest: ValidacionBasic,
+        handler: AcreditarPreRegistro
     },
 ]
 
