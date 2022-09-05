@@ -117,7 +117,7 @@ export const UpdateTiendasPassword = async (req, reply) => {
 export const UpdateTiendas = async (req, reply) => {
     try {
         const { id, nombre_tienda, responsable, cedula, comision, token_sistema, usuario, password, new_password, direccion, telefono } = req.body;
-        let hash = await hashPassword(new_password)
+   
         comision == null ? 0.50 : parseFloat(comision);
         console.log(req.body)
         console.log("\n")
@@ -137,6 +137,7 @@ export const UpdateTiendas = async (req, reply) => {
                 });
             }
         }else{
+            let hash = await hashPassword(new_password)
             const tienda = await conexion.query(`UPDATE tienderos_usuarios 
             SET nombre_tienda = ?, responsable = ?, cedula = ?, comision = ?, token_sistema = ?, direccion = ?, usuario = ?, telefono = ?, password = ? WHERE id = ?`, 
             [nombre_tienda, responsable, cedula, comision, token_sistema, direccion, usuario, telefono, hash, id]);
