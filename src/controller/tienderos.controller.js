@@ -121,7 +121,7 @@ export const UpdateTiendas = async (req, reply) => {
         comision == null ? 0.50 : parseFloat(comision);
         console.log(req.body)
         console.log("\n")
-        if(new_password != ""){
+        if(new_password == ""){
             const tienda = await conexion.query(`UPDATE tienderos_usuarios 
             SET nombre_tienda = ?, responsable = ?, cedula = ?, comision = ?, token_sistema = ?, direccion = ?, usuario = ?, telefono = ? WHERE id = ?`, 
             [nombre_tienda, responsable, cedula, comision, token_sistema, direccion, usuario, telefono, id]);
