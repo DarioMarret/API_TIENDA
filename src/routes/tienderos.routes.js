@@ -95,7 +95,6 @@ const routes = [
                 cedula: { type: 'string', description: 'cedula' },
                 comision: { type: 'number', description: 'comision' },
                 token_sistema: { type: 'string', description: 'token_sistema' },
-                password: { type: 'string', description: 'password' },
                 direccion: { type: 'string', description: 'direccion' },
                 usuario: { type: 'string', description: 'usuario' },
                 telefono: { type: 'string', description: 'telefono' },
