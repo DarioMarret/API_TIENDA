@@ -87,17 +87,23 @@ const routes = [
         path: '/api/tiendas',
         method: 'PUT',
         schema: {
-            summary: 'cambiar password',
-            required: ['nombre_tienda','responsable','cedula','token_sistema','usuario'],
-            properties: {
-                nombre_tienda: { type: 'string', description: 'nombre_tienda' },
-                responsable: { type: 'string', description: 'responsable' },
-                cedula: { type: 'string', description: 'cedula' },
-                comision: { type: 'number', description: 'comision' },
-                token_sistema: { type: 'string', description: 'token_sistema' },
-                direccion: { type: 'string', description: 'direccion' },
-                usuario: { type: 'string', description: 'usuario' },
-                telefono: { type: 'string', description: 'telefono' },
+            summary: 'update tiendas',
+            body: {
+                type: 'object',
+                // required: ['id','account_id','nombre_tienda','responsable','cedula','token_sistema','usuario'],
+                properties: {
+                    id: { type: 'number',description: 'id'},
+                    // account_id: { type: 'number',description: 'account_id'},
+                    nombre_tienda: { type: 'string', description: 'nombre_tienda' },
+                    responsable: { type: 'string', description: 'responsable' },
+                    cedula: { type: 'string', description: 'cedula' },
+                    comision: { type: 'string', description: 'comision' },
+                    token_sistema: { type: 'string', description: 'token_sistema' },
+                    // password: { type: 'string', description: 'password' },
+                    direccion: { type: 'string', description: 'direccion' },
+                    usuario: { type: 'string', description: 'usuario' },
+                    telefono: { type: 'string', description: 'telefono' },
+                }
             }
         },
         onRequest: ValidacionBasic,
