@@ -1,4 +1,4 @@
-import { DeleteTiendas, ListarHistorialTienda, ListarSaldosTienda, ListarTransaccionesTienda, ListarTransacionesUltimas, ListTiendas, ListTiendasCedula, SaveTiendas, TotalesCard, UpadteTransacionTicket, UpdateTiendas, UpdateTiendasPassword } from "../controller/tienderos.controller";
+import { DeleteTiendas, ListarHistorialTienda, ListarSaldosTienda, ListarTransaccionesTienda, ListarTransacionesUltimas, ListTiendas, ListTiendasCedula, SaveTiendas, TotalesCard, UpadteTransacionTicket, UpdateTiendas, UpdateTiendasPassword, ValidarExistenciaTienda } from "../controller/tienderos.controller";
 import { ValidacionBasic } from "../function/ValidacionBasic";
 
 const routes = [
@@ -207,6 +207,12 @@ const routes = [
         },
         onRequest: ValidacionBasic,
         handler: UpadteTransacionTicket
+    },
+    {
+        path: '/api/validarTienda',
+        method: 'PUT',
+        onRequest: ValidacionBasic,
+        handler: ValidarExistenciaTienda
     },
 ]
 

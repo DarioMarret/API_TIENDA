@@ -327,3 +327,22 @@ export const UpadteTransacionTicket = async (req, reply) => {
         throw new Error("UpadteTransacionTicket-->  " + error);
     }
 }
+
+export const ValidarExistenciaTienda = async (req, reply) => {
+    try {
+        const tienda = await conexion.query(`SELECT * FROM tienderos_usuarios WHERE cedula = ?`, [req.body.cedula]);
+        if (!tienda) {
+            reply.code(500).send({
+                success: false,
+                message: "Error al tienda"
+            });
+        } else {
+            reply.code(200).send({
+                success: true,
+                data: tienda[0]
+            });
+        }
+    } catch (error) {
+        throw new Error("ValidarExistenciaTienda-->  " + error);
+    }
+}
