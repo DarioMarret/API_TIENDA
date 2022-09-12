@@ -331,7 +331,7 @@ export const UpadteTransacionTicket = async (req, reply) => {
 export const ValidarExistenciaTienda = async (req, reply) => {
     try {
         const tienda = await conexion.query(`SELECT * FROM tienderos_usuarios WHERE cedula = ?`, [req.body.cedula]);
-        if (!tienda) {
+        if (tienda[0].length == 0) {
             reply.code(500).send({
                 success: false,
                 message: "Error al tienda"
