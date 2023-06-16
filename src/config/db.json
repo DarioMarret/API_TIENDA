@@ -1,8 +1,8 @@
 {
-  "host"                 : "localhost",
-  "user"                 : "root",
-  "password"             : "sp202ghtsqb.qwdhg.",
+  "host"                 : "db-mysql-codigomarret-do-user-8297409-0.b.db.ondigitalocean.com:25060",
+  "user"                 : "doadmin",
+  "password"             : "AVNS_K-89rKShc1XdYgWthIa",
   "database"             : "tienda",
   "waitForConnections"   : true,
-  "connectionLimit"      : 10
+  "connectionLimit"      : 22
 }

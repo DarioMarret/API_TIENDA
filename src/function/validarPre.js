@@ -18,7 +18,7 @@ async function VerificarEstado(token, estado, cedula) {
 
         })
     if (status === 200) {
-        if (data) {
+        if (data.estado !== "error") {
             let estado = data.instalaciones[0].estate
             await conexion.query(`UPDATE preregistros SET estado_aprobado = '${estado}' WHERE cedula = '${cedula}'`)
         }
