@@ -9,11 +9,11 @@ import mysql from 'mysql2/promise';
 // @db-mysql-codigomarret-do-user-8297409-0.b.db.ondigitalocean.com:25060/defaultdb?ssl-mode=REQUERIDO
 
 export const conexion = mysql.createPool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    host: 'db-mysql-codigomarret-do-user-8297409-0.b.db.ondigitalocean.com',
+    port: 25060,
+    user: 'doadmin',
+    password: 'AVNS_K-89rKShc1XdYgWthIa',
+    database: 'tienda',
     waitForConnections: true,
     connectionLimit: 10,
 });
