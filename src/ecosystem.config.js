@@ -17,7 +17,12 @@ module.exports = {
       token_tienda: "",
       mikrowisp: "http://45.224.96.50/api/v1/",
       endpoitcedula: "https://turnos.manta.gob.ec/consultacedula/",
-      endpoitpre_registro: "http://45.224.96.50/api/v1/ListInstall"
+      endpoitpre_registro: "http://45.224.96.50/api/v1/ListInstall",
+      DB_HOST: "db-mysql-codigomarret-do-user-8297409-0.b.db.ondigitalocean.com",
+      DB_PORT: "25060",
+      DB_USER: "doadmin",
+      DB_PASSWORD: "AVNS_K-89rKShc1XdYgWthIa",
+      DB_DATABASE: "tienda",
     },
     env_development: {
       NODE_ENV: "development"
