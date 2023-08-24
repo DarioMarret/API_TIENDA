@@ -19,7 +19,7 @@ module.exports = {
       endpoitcedula: "https://turnos.manta.gob.ec/consultacedula/",
       endpoitpre_registro: "http://45.224.96.50/api/v1/ListInstall",
       DB_HOST: "177.234.209.101",
-      DB_PORT: "3306",
+      DB_PORT: "25060",
       DB_USER: "root",
       DB_PASSWORD: "boleteria",
       DB_DATABASE: "tienda",
