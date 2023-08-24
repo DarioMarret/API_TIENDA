@@ -9,13 +9,13 @@ import mysql from 'mysql2/promise';
 // @db-mysql-codigomarret-do-user-8297409-0.b.db.ondigitalocean.com:25060/defaultdb?ssl-mode=REQUERIDO
 
 export const conexion = mysql.createPool({
-    host: 'db-mysql-codigomarret-do-user-8297409-0.b.db.ondigitalocean.com',
-    port: 25060,
-    user: 'doadmin',
-    password: 'AVNS_K-89rKShc1XdYgWthIa',
+    host: '177.234.209.101',
+    port: 3306,
+    user: 'root',
+    password: 'boleteria',
     database: 'tienda',
     waitForConnections: true,
-    connectionLimit: 10,
+    connectionLimit: 100,
 });
 
 // export const conexion = mysql.createPool(JSON.parse(fs.readFileSync(path.join(__dirname, '../config/db.json'), 'utf8')));
